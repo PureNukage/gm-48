@@ -4,4 +4,6 @@ Floor = 0
 DoorID = 0
 DoorGID = 0
 
+goal = 0
+
 states = states.idle

@@ -50,11 +50,12 @@ if time.stream == 1 {
 
 else {
 	
-	var total_guests = 8
+	var total_guests = 1
 	
 	if instance_number(guest) < total_guests {
 		
 		var _random = irandom_range(0,ds_list_size(door_list)-1)
+		var _random2 = irandom_range(0,ds_list_size(door_list)-1)
 		
 		var which_room = door_list[| _random]
 		
@@ -63,6 +64,8 @@ else {
 		_guest.Floor = door_list[| _random].Floor
 		_guest.DoorID = _random
 		_guest.DoorGID = door_list[| _random]
+		
+		_guest.goal = door_list[| _random2]
 	}
 	
 
