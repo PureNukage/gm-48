@@ -50,7 +50,7 @@
 	
 #endregion
 
-else {
+else if time.stream > 1 {
 
 	#region Spawn guest(s)
 	

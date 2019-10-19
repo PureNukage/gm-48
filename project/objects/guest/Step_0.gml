@@ -27,7 +27,8 @@ switch(states)
 						
 								//	This elevators on the same floor as us!
 								if _elevator.Floor == Floor {	
-									ds_list_add(elevators_on_this_floor,id)
+									show_debug_message("["+string(time.stream)+"] Elevator "+string(_elevator)+" is on the same floor as me")								
+									ds_list_add(elevators_on_this_floor,_elevator.id)
 								}
 							}
 						#endregion
@@ -36,12 +37,16 @@ switch(states)
 					
 							if ds_list_size(elevators_on_this_floor) > 0 {
 								var how_many = ds_list_size(elevators_on_this_floor)
+								
+								debug_log("There are "+string(how_many)+" elevators on my floor")	
+								
 								#region	Sort elevators into closest -> furthest
 									var distance_list = ds_list_create()						
 									for(var elv=0;elv<how_many;elv++) {
 							
 										//	Distance between guest and elevator
 										var distance = abs(elevators_on_this_floor[| elv].x - x)
+										debug_log("Elevator "+string(elevators_on_this_floor[| elv])+" is "+string(distance)+" away from me")
 										ds_list_add(distance_list,distance)
 									}
 							
@@ -65,8 +70,11 @@ switch(states)
 									var which_side_of_elevator = sign(closest_elevator.y-y)
 									if which_side_of_elevator = -1 which_side_of_elevator = 0
 						
-									show_debug_message("["+string(time.stream)+"] goal: "+string(goal))
-									goalX = goal.shaft[which_side_of_elevator]
+									debug_log("goal name: "+string(object_get_name(goal.object_index))+" goal GID: "+string(goal))
+									
+									var _direction = sign(goalX - y)
+									goalX = goal.shaft[which_side_of_elevator]+(sign(_direction)*-31)
+									debug_log("goalX "+string(goalX))									
 						
 									states = states.walk
 						
@@ -86,7 +94,7 @@ switch(states)
 				
 					break;
 					case 0:		//	My goal is on the same floor as me
-					show_debug_message("["+string(time.stream)+"] My goal is on the same floor as me")
+					debug_log("My goal is on the same floor as me")
 			
 					break;
 				}
@@ -103,6 +111,8 @@ switch(states)
 			var _direction = sign(goalX - y)
 			
 			hspd += _direction*movespeed
+			
+			hspd = clamp(hspd,-movespeed,movespeed)
 			
 			//	Apply horizontal thrust while collision checking each pixel movement
 			repeat(abs(hspd)) {

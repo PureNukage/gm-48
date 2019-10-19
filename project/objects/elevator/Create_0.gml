@@ -5,8 +5,8 @@ states = states.idle
 Floor = 0
 
 shaft = []
-shaft[0] = x
-shaft[1] = x+sprite_width
+shaft[0] = x-(sprite_width/2)
+shaft[1] = x+(sprite_width/2)
 
 //	Loop for filling in array y-positions of my floors
 for(var i=0;i<floors;i++) {		

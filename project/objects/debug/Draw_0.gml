@@ -8,6 +8,7 @@ if mode == true {
 	}
 
 	with elevator {
+		draw_text(x-64,y-140,"GID: "+string(id))
 		draw_text(x-64,y-125,"Floor: "+string(Floor))
 		draw_text(x-64,y-110,"relative floor: "+string(current_floor)+"/"+string(floors-1))
 		draw_text(x-64,y-95,"shaft 0: "+string(shaft[0]))
@@ -17,12 +18,15 @@ if mode == true {
 	with door {
 		draw_text(x-64,y-120,"floor: "+string(Floor))
 		draw_text(x-64,y-135,"ID: "+string(ID))	
+		draw_text(x-64,y-150,"GID: "+string(id))
 	}
 
 	with guest {
 		draw_text(x-64,y-80,"floor: "+string(Floor))
 		draw_text(x-64,y-95,"door: "+string(DoorID))
-		draw_text(x-64,y-105,"goalX: "+string(goalX))
+		draw_text(x-64,y-110,"goalX: "+string(goalX))
+		draw_text(x-64,y-125,"x: "+string(x))
+		draw_text(x-64,y-140,"GID: "+string(id))
 	}	
 	
 }
