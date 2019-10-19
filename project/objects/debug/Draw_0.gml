@@ -22,6 +22,7 @@ if mode == true {
 	with guest {
 		draw_text(x-64,y-80,"floor: "+string(Floor))
 		draw_text(x-64,y-95,"door: "+string(DoorID))
+		draw_text(x-64,y-105,"goalX: "+string(goalX))
 	}	
 	
 }

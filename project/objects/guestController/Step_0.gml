@@ -44,7 +44,7 @@
 	
 		//	Debug
 		for(var d=0;d<ds_list_size(floors_list);d++) {
-			show_debug_message("floor: " + string(d) + " is at: " + string(floors_list[| d]))
+			show_debug_message("["+string(time.stream)+"] floor: " + string(d) + " is at: " + string(floors_list[| d]))
 		}
 	}
 	
@@ -60,12 +60,16 @@ else {
 		
 			var _random = irandom_range(0,ds_list_size(door_list)-1)
 			var _random2 = irandom_range(0,ds_list_size(door_list)-1)
+			
+			while _random2 == _random _random2 = irandom_range(0,ds_list_size(door_list)-1)
 		
-			var which_room = door_list[| _random]
+			var which_door = door_list[| _random]
 		
-			var _guest = instance_create_layer(which_room.x,which_room.y,"Instances_controller",guest)
+			var _guest = instance_create_layer(which_door.x,which_door.y,"Instances_controller",guest)
 		
-			_guest.Floor = door_list[| _random].Floor
+			show_debug_message("["+string(time.stream)+"] which door GID: "+string(which_door))
+			show_debug_message("["+string(time.stream)+"] door assigned floor: "+string(which_door.Floor))
+			_guest.Floor = which_door.Floor
 			_guest.DoorID = _random
 			_guest.DoorGID = door_list[| _random]
 		
