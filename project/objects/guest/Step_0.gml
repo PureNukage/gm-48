@@ -5,5 +5,8 @@ switch(states)
 	break
 	case states.walk:
 	
+		
+	
+	
 	break
 }

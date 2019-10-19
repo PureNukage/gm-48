@@ -8,7 +8,8 @@ if mode == true {
 	}
 
 	with elevator {
-		draw_text(x-64,y-110,"Floor: "+string(Floor))
+		draw_text(x-64,y-125,"Floor: "+string(Floor))
+		draw_text(x-64,y-110,"relative floor: "+string(current_floor)+"/"+string(floors-1))
 		draw_text(x-64,y-95,"shaft 0: "+string(shaft[0]))
 		draw_text(x-64,y-80,"shaft 1:" +string(shaft[1]))	
 	}
