@@ -1,4 +1,5 @@
 enum states {
 	idle,
-	elevator
+	elevator,
+
 }

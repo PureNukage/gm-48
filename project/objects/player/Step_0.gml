@@ -21,10 +21,25 @@ switch(states)
 			}	
 		}
 		
-		//	Use Elevator
-		if playerInput.key_up {
+		#region	Use Elevator
+		
+		if (playerInput.key_up or playerInput.key_down) and place_meeting(x,y+1,elevator) {
+			var _elevator = instance_place(x,y+1,elevator)
 			
+			// We wanting to go up or down
+			var _direction = playerInput.key_down - playerInput.key_up
+			var hypothetical_nextfloor = _elevator.current_floor - _direction
+			
+			show_debug_message("hypothetical nextfloor: "+string(hypothetical_nextfloor))
+			
+			//	If the floor we wish to go to exists
+			if (hypothetical_nextfloor != _elevator.floors and hypothetical_nextfloor != -1) {
+				states = states.elevator
+				_elevator.states = states.elevator
+				_elevator.floor_direction = playerInput.key_down - playerInput.key_up
+			}
 		}	
+		#endregion
 		
 	break
 	#endregion
