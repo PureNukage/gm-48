@@ -1,5 +1,5 @@
 image_blend = c_green
-
+depth = -1;
 states = states.idle
 
 floors = 2						//	The number of floors this elevator has
