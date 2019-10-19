@@ -20,6 +20,8 @@ switch(states)
 			//	Ding ding, we've arrived!
 			states = states.idle
 			player.states = states.idle
+			Floor = Floor - floor_direction
+			player.Floor = Floor
 			current_floor = current_floor - floor_direction
 			floor_direction = 0
 			

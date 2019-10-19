@@ -2,6 +2,12 @@ image_blend = c_green
 depth = -1;
 states = states.idle
 
+Floor = 0
+
+shaft = []
+shaft[0] = x
+shaft[1] = x+sprite_width
+
 //	Loop for filling in array y-positions of my floors
 for(var i=0;i<floors;i++) {		
 	if i == current_floor {
