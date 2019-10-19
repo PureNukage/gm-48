@@ -12,6 +12,9 @@ for(var i=0;i<floors;i++) {
 	show_debug_message("floor: "+string(i)+" at y: "+string(floors_y[i]))
 }
 
+//	Add ourselves into the elevator list
+ds_list_add(guestController.elevator_list,id)
+
 /*	Everything under this are the values you can change as a child
 
 floors = 2						//	The number of floors this elevator has
