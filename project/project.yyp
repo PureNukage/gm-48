@@ -111,6 +111,14 @@
             }
         },
         {
+            "Key": "42cce9c5-8287-44d3-a454-b1cd48406c61",
+            "Value": {
+                "id": "2cafdfe3-e0d0-43a2-bf92-3a3449719210",
+                "resourcePath": "objects\\elevator_2floors_starts1\\elevator_2floors_starts1.yy",
+                "resourceType": "GMObject"
+            }
+        },
+        {
             "Key": "4be13dc3-8d13-48ca-a3f8-90ac25a00c6a",
             "Value": {
                 "id": "bbff3102-0802-4c6e-9ce4-1da00e908888",

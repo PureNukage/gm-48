@@ -5,7 +5,8 @@
     "name": "a31c9c3c-e4c2-45e1-ad28-c696c7bc6480",
     "children": [
         "0e2cd1e2-f172-42ff-9196-1ce033c363d3",
-        "06935b21-0f8a-4604-80b5-6a8aadab69e0"
+        "06935b21-0f8a-4604-80b5-6a8aadab69e0",
+        "42cce9c5-8287-44d3-a454-b1cd48406c61"
     ],
     "filterType": "GMObject",
     "folderName": "elevators",
