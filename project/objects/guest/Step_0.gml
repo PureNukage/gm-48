@@ -93,7 +93,52 @@ switch(states)
 					
 						#region No elevators on this floor
 							else {
-
+								
+								#region	Guest waits at elevator shaft
+									var all_elevators_distance = ds_list_create()
+									
+									//	Find nearest elevator shaft 
+									for(var elev=0;elev<ds_list_size(guestController.elevator_list);elev++) {
+										//	Does this elevator come to my floor?
+										var comes_to_my_floor = 0
+										for(var elv=0;elv<guestController.elevator_list[| elev].floors;elv++) {
+											if guestController.elevator_list[| elev].floors_y[elv] == y {
+												comes_to_my_floor++		
+											}
+										}
+										if comes_to_my_floor > 0 {
+											var distance = abs(guestController.elevator_list[| elev].x - x)
+											ds_list_add(all_elevators_distance)
+										}
+									}
+									ds_list_sort(all_elevators_distance,true)
+									with elevator {
+										if x == all_elevators_distance[| 0] {
+											var elev_id = id	
+										}
+									}
+									
+									ds_stack_push(goal_queue,elev_id)
+									goal = elev_id
+						
+									var which_side_of_elevator = 0
+									var which_side_of_elevator_raw = sign(elev_id.x - x)
+									if which_side_of_elevator_raw == -1 which_side_of_elevator = 1
+									else which_side_of_elevator = 0
+									
+									debug_log("moving towards goal! name: "+string(object_get_name(goal.object_index))+" , GID: "+string(goal))
+									debug_log("taking the "+string(which_side_of_elevator)+" elevator shaft")
+									
+									goalX = goal.shaft[which_side_of_elevator]
+									Direction = sign(goalX - x)
+									goalX += sign(Direction)*-31
+									debug_log("goalX "+string(goalX))									
+									debug_log("direction: "+string(Direction))
+						
+									states = states.walk
+								
+								
+								#endregion
 							}
 						#endregion
 					
@@ -156,27 +201,64 @@ switch(states)
 								case elevator_2floors_starts1:
 									//	Check if elevators here, if so get on it
 									debug_log("Checking for elevator")
-									if (goal.y-sprite_height == y) {
-										var where_im_standing = irandom_range(goal.x-(sprite_width/2)+32,goal.x+(sprite_width/2)-32)
-										var _goalpost = instance_create_layer(where_im_standing,y,"Instances_controller",goalpost)
-										_goalpost.goal_type = goal_type.elevator_board
-										_goalpost.elevator = goal
+									#region Elevators here, all aboard
+										if (goal.y-sprite_height == y) {
+											var where_im_standing = irandom_range(goal.x-(sprite_width/2)+32,goal.x+(sprite_width/2)-32)
+											var _goalpost = instance_create_layer(where_im_standing,y,"Instances_controller",goalpost)
+											_goalpost.goal_type = goal_type.elevator_board
+											_goalpost.elevator = goal
 										
-										ds_list_add(goal.passenger_list,id)
+											ds_list_add(goal.passenger_list,id)
 										
-										ds_stack_pop(goal_queue)
+											ds_stack_pop(goal_queue)
 										
-										ds_stack_push(goal_queue,_goalpost)
-										goal = ds_stack_top(goal_queue)
-										goalX = goal.x
+											ds_stack_push(goal_queue,_goalpost)
+											goal = ds_stack_top(goal_queue)
+											goalX = goal.x
 										
-										debug_log("My new goal is "+string(object_get_name(ds_stack_top(goal_queue).object_index)))
+											debug_log("My new goal is "+string(object_get_name(ds_stack_top(goal_queue).object_index)))
 										
-										debug_log("I am boarding an elevator")
-									} else {
-										debug_log("ERROR No elevator! ERROR")	
-									}
-								
+											debug_log("I am boarding an elevator")
+										} 
+									#endregion
+									
+									#region	Elevators not here yet 
+										else {
+											debug_log("ERROR No elevator! ERROR")	
+										
+											//	Are there any other elevators on this floor?
+											var other_elevator = 0
+											with elevator {
+												if other.y == y-64 {
+													other_elevator = id	
+												}
+											}
+											if other_elevator != 0 {
+												debug_log("Going to a different elevator on this floor")
+												
+												ds_stack_push(goal_queue,other_elevator)
+												goal = other_elevator
+						
+												var which_side_of_elevator = 0
+												var which_side_of_elevator_raw = sign(other_elevator.x - x)
+												if which_side_of_elevator_raw == -1 which_side_of_elevator = 1
+												else which_side_of_elevator = 0
+									
+												debug_log("moving towards goal! name: "+string(object_get_name(goal.object_index))+" , GID: "+string(goal))
+												debug_log("taking the "+string(which_side_of_elevator)+" elevator shaft")
+									
+												goalX = goal.shaft[which_side_of_elevator]
+												Direction = sign(goalX - x)
+												goalX += sign(Direction)*-31
+												debug_log("goalX "+string(goalX))									
+												debug_log("direction: "+string(Direction))
+						
+												states = states.walk
+											}
+										
+										}
+									#endregion
+									
 								
 								break;
 							#endregion
