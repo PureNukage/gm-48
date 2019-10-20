@@ -37,6 +37,7 @@ switch(states)
 				states = states.elevator
 				_elevator.states = states.elevator
 				_elevator.floor_direction = playerInput.key_down_pressed - playerInput.key_up_pressed
+				ds_list_add(_elevator.passenger_list,id)
 			}
 		}	
 		#endregion

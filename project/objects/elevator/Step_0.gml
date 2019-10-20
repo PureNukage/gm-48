@@ -13,7 +13,9 @@ switch(states)
 			
 			//	Move elevator and player in elevators direction
 			y += floor_direction
-			player.y += floor_direction
+			for(var i=0;i<ds_list_size(passenger_list);i++) {
+				passenger_list[| i].y += floor_direction	
+			}
 			
 		} else {
 			
@@ -21,7 +23,9 @@ switch(states)
 			states = states.idle
 			player.states = states.idle
 			Floor = Floor - floor_direction
-			player.Floor = Floor
+			for(var i=0;i<ds_list_size(passenger_list);i++) {
+				passenger_list[| i].Floor = Floor	
+			}
 			current_floor = current_floor - floor_direction
 			floor_direction = 0
 			

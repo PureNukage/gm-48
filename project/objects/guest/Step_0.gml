@@ -111,6 +111,7 @@ switch(states)
 	
 		break
 	#endregion
+	
 	#region Walk
 		case states.walk:
 			
@@ -125,6 +126,7 @@ switch(states)
 					x += sign(hspd)	
 				} else { 
 					#region	Arrived at goal
+						debug_log("I have arrived at my goal")
 						hspd = 0
 						
 						//	What object was our goal?
@@ -132,21 +134,55 @@ switch(states)
 						{
 							#region Elevator
 								case elevator:
+								case elevator_child:
+								case elevator_2floors_starts1:
 									//	Check if elevators here, if so get on it
-									if (goal.y == y) {
+									debug_log("Checking for elevator")
+									if (goal.y-sprite_height == y) {
 										var where_im_standing = irandom_range(goal.x-(sprite_width/2)+32,goal.x+(sprite_width/2)-32)
 										var _goalpost = instance_create_layer(where_im_standing,y,"Instances_controller",goalpost)
 										_goalpost.goal_type = goal_type.elevator_board
+										
+										ds_list_add(goal.passenger_list,id)
+										
+										ds_stack_pop(goal_queue)
 										
 										ds_stack_push(goal_queue,_goalpost)
 										goal = ds_stack_top(goal_queue)
 										goalX = goal.x
 										
+										debug_log("My new goal is "+string(object_get_name(ds_stack_top(goal_queue).object_index)))
+										
 										debug_log("I am boarding an elevator")
+									} else {
+										debug_log("ERROR No elevator! ERROR")	
 									}
 								
 								
 								break;
+							#endregion
+							
+							#region Goalpost
+								case goalpost:
+									//	What kind of goalpost
+									switch(goal.goal_type)
+									{
+										//	I just boarded an elevator
+										case goal_type.elevator_board:
+										
+											debug_log("I just boarded an elevator")
+											
+											states = states.elevator
+											
+											ds_stack_pop(goal_queue)
+											
+											debug_log("My new goal is "+string(object_get_name(ds_stack_top(goal_queue).object_index)))
+											
+										break;
+									}
+									
+									
+								break
 							#endregion
 						}
 					
@@ -156,5 +192,14 @@ switch(states)
 	
 	
 		break
+	#endregion
+	
+	#region Elevator
+		case states.elevator:
+	
+			
+	
+	
+		break;
 	#endregion
 }

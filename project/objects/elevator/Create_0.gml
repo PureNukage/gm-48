@@ -8,6 +8,8 @@ shaft = []
 shaft[0] = x-(sprite_width/2)
 shaft[1] = x+(sprite_width/2)
 
+passenger_list = ds_list_create()
+
 //	Loop for filling in array y-positions of my floors
 for(var i=0;i<floors;i++) {		
 	if i == current_floor {
