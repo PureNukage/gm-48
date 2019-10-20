@@ -246,6 +246,22 @@ switch(states)
 												//	Remove ourselves from current elevator passenger_list
 												ds_list_delete(goal.passenger_list,ds_list_find_index(goal.passenger_list,id))
 												
+												//	Calc arrow colors 
+												up_arrow_color = 0 
+												down_arrow_color = 0
+												if ds_list_size(goal.passenger_list) > 0 {
+													for(var i=0;i<ds_list_size(goal.passenger_list);i++) {
+														var _passenger = goal.passenger_list[| i]
+														if _passenger.object_index == guest {
+															with _passenger {
+																if vDirection > 0 other.down_arrow_color = 1
+																if vDirection < 0 other.up_arrow_color = 1
+															}
+														}
+						
+													}
+												}
+												
 												ds_stack_push(goal_queue,other_elevator)
 												goal = other_elevator
 						
