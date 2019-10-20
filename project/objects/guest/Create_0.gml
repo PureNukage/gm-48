@@ -14,3 +14,5 @@ goal = 0
 goal_queue = ds_stack_create()
 
 states = states.idle
+
+ds_list_add(guestController.guest_list,id)

@@ -18,10 +18,12 @@
 		}
 
 		ds_list_sort(floors_list,false)	
+		
+		//	Copy door list and make vacancy list
+		ds_list_copy(vacancy_list,door_list)
 	
 		//	How many guests we got and assign floors to doors
 		for(var i=0;i<ds_list_size(door_list);i++) {
-			guest_list[| i] = -1
 			for(var f=0;f<ds_list_size(floors_list);f++) {
 				if floors_list[| f] == door_list[| i].y+sprite_height {
 					door_list[| i].Floor = f
@@ -56,12 +58,12 @@ else if time.stream > 1 {
 	
 		if instance_number(guest) < guest_total {
 		
-			var _random_assigned_door = irandom_range(0,ds_list_size(door_list)-1)
-			var _random_goal_door = irandom_range(0,ds_list_size(door_list)-1)
+			var _random_assigned_door = irandom_range(0,ds_list_size(vacancy_list)-1)
+			var _random_goal_door = irandom_range(0,ds_list_size(vacancy_list)-1)
 			
 			while _random_goal_door == _random_assigned_door _random_goal_door = irandom_range(0,ds_list_size(door_list)-1)
 		
-			var which_door = door_list[| _random_assigned_door]
+			var which_door = vacancy_list[| _random_assigned_door]
 		
 			var _guest = instance_create_layer(which_door.x,which_door.y,"Instances_controller",guest)
 		
@@ -69,9 +71,11 @@ else if time.stream > 1 {
 			debug_log("door assigned floor: "+string(which_door.Floor))
 			_guest.Floor = which_door.Floor
 			_guest.DoorID = _random_assigned_door
-			_guest.DoorGID = door_list[| _random_assigned_door]
+			_guest.DoorGID = vacancy_list[| _random_assigned_door]
 		
 			ds_stack_push(_guest.goal_queue,door_list[| _random_goal_door])
+			
+			ds_list_delete(vacancy_list,_random_assigned_door)			
 		}
 		
 	#endregion
