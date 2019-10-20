@@ -61,15 +61,19 @@ else if time.stream > 1 {
 			var _guest = spawn_guest()
 			if _guest != -1 {
 				
-				if ds_list_size(guestController.vacancy_list) == 1 {
-					var _random = 0	
-				} else {
-					var _random = irandom_range(0,ds_list_size(guestController.vacancy_list)-1)	
-				}
+				if ds_list_size(guestController.vacancy_list) > 0 {
+					if ds_list_size(guestController.vacancy_list) == 1 {
+						var _random = 0	
+					} else {
+						var _random = irandom_range(0,ds_list_size(guestController.vacancy_list)-1)	
+					}
 										
-				var new_door = guestController.vacancy_list[| _random]
-				ds_stack_push(_guest.goal_queue,new_door)
-				ds_list_delete(guestController.vacancy_list,_random)
+					var new_door = guestController.vacancy_list[| _random]
+					ds_stack_push(_guest.goal_queue,new_door)
+					ds_list_delete(guestController.vacancy_list,_random)
+				} else {
+					debug_log("Nowhere to send this guy!")
+				}
 			}
 		}
 		
