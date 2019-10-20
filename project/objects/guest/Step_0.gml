@@ -115,6 +115,15 @@ switch(states)
 	
 	#region Walk
 		case states.walk:
+		
+			#region If boarding elevator (LAZY FIX)
+				if goal.object_index == goalpost and goal.goal_type == goal_type.elevator_board {
+					if ds_list_find_index(goal.elevator.passenger_list,id) == -1 {
+						ds_list_add(goal.elevator.passenger_list,id)	
+					}
+				}
+				
+			#endregion
 			
 			hspd += Direction*movespeed
 			
@@ -143,6 +152,7 @@ switch(states)
 										var where_im_standing = irandom_range(goal.x-(sprite_width/2)+32,goal.x+(sprite_width/2)-32)
 										var _goalpost = instance_create_layer(where_im_standing,y,"Instances_controller",goalpost)
 										_goalpost.goal_type = goal_type.elevator_board
+										_goalpost.elevator = goal
 										
 										ds_list_add(goal.passenger_list,id)
 										

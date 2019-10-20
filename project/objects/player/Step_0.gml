@@ -30,7 +30,7 @@ switch(states)
 			var _direction = playerInput.key_down_pressed - playerInput.key_up_pressed
 			var hypothetical_nextfloor = _elevator.current_floor - _direction
 			
-			show_debug_message("hypothetical nextfloor: "+string(hypothetical_nextfloor))
+			debug_log("hypothetical nextfloor: "+string(hypothetical_nextfloor))
 			
 			//	If the floor we wish to go to exists
 			if (hypothetical_nextfloor != _elevator.floors and hypothetical_nextfloor != -1) {
