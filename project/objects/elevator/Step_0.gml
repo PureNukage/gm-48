@@ -53,6 +53,22 @@ switch(states)
 			
 			ds_list_clear(passenger_list)
 			ds_list_copy(passenger_list,new_passenger_list)
+			
+			//	Calc arrow colors 
+			up_arrow_color = 0 
+			down_arrow_color = 0
+			if ds_list_size(new_passenger_list) > 0 {
+				for(var i=0;i<ds_list_size(new_passenger_list);i++) {
+					var _passenger = new_passenger_list[| i]
+					if _passenger.object_index == guest {
+						with _passenger {
+							if vDirection > 0 other.down_arrow_color = 1
+							if vDirection < 0 other.up_arrow_color = 1
+						}
+					}
+						
+				}
+			}
 
 			current_floor = current_floor - floor_direction
 			floor_direction = 0
@@ -75,10 +91,3 @@ switch(states)
 	break
 	#endregion
 }
-
-////	Calculate Arrows
-//var floor_above_me = current_floor + 1
-//if floor_above_me + 1 > floors up_arrow = 0
-
-//var floor_under_me = current_floor - 1
-//if floor_under_me - 1 < 0 down_arrow = 0

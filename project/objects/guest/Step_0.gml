@@ -11,7 +11,7 @@ switch(states)
 				goal = ds_stack_top(goal_queue)
 		
 				// Is my goal above me, under me or on the same floor?
-				var vDirection = sign(Floor - goal.Floor)
+				vDirection = sign(Floor - goal.Floor)
 		
 				switch(vDirection)
 				{
@@ -178,7 +178,7 @@ switch(states)
 			#region If boarding elevator (LAZY FIX)
 				if goal.object_index == goalpost and goal.goal_type == goal_type.elevator_board {
 					if ds_list_find_index(goal.elevator.passenger_list,id) == -1 {
-						ds_list_add(goal.elevator.passenger_list,id)	
+						ds_list_add(goal.elevator.passenger_list,id)
 					}
 				}
 				
@@ -215,7 +215,7 @@ switch(states)
 											_goalpost.elevator = goal
 											_goalpost.Floor = goal.Floor
 										
-											ds_list_add(goal.passenger_list,id)
+											ds_list_add(goal.passenger_list,id)											
 										
 											ds_stack_pop(goal_queue)
 										
@@ -286,6 +286,10 @@ switch(states)
 												debug_log("I just boarded an elevator")
 											
 												states = states.elevator
+												
+												debug_log("vDirection: "+string(vDirection))
+												if vDirection > 0 goal.elevator.down_arrow_color = 1
+												if vDirection < 0 goal.elevator.up_arrow_color = 1
 											
 												instance_destroy(goal)
 												ds_stack_pop(goal_queue)
@@ -355,6 +359,7 @@ switch(states)
 			if Floor == goal.Floor {
 				debug_log("I have arrived at the floor of my goal: "+string(object_get_name(ds_stack_top(goal_queue).object_index)))
 				
+				vDirection = 0
 				states = states.walk
 			}
 	

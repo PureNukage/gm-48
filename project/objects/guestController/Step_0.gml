@@ -71,7 +71,8 @@ else if time.stream > 1 {
 					var _floor = _guest.Floor
 				}
 				
-				var _x = irandom_range(32,room_width-32)
+				var _x = irandom_range(_guest.x-164,_guest.x+164)
+				while (_x < 0 or _x > room_width) _x = irandom_range(_guest.x-164,_guest.x+164)
 				
 				var _goalpost = instance_create_layer(_x,floors_list[| _floor],"Instances_controller",goalpost)
 				
@@ -109,7 +110,8 @@ else if time.stream > 1 {
 					var _floor = _guest.Floor
 				}
 				
-				var _x = irandom_range(32,room_width-32)
+				var _x = irandom_range(_guest.x-164,_guest.x+164)
+				while (_x < 0 or _x > room_width) _x = irandom_range(_guest.x-164,_guest.x+164)
 				
 				var _goalpost = instance_create_layer(_x,floors_list[| _floor],"Instances_controller",goalpost)
 				
