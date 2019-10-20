@@ -4,8 +4,9 @@ switch(states)
 		case states.idle:
 	
 		#region	I got something to do!	
-			show_debug_message("["+string(time.stream)+"] I got something to do!")
 			if ds_stack_size(goal_queue) > 0 {
+		
+				show_debug_message("["+string(time.stream)+"] I have " +string(ds_stack_size(goal_queue)) + " goal to do!")
 		
 				goal = ds_stack_top(goal_queue)
 		
@@ -174,8 +175,13 @@ switch(states)
 											
 											states = states.elevator
 											
+											instance_destroy(goal)
 											ds_stack_pop(goal_queue)
+											goal = ds_stack_top(goal_queue)
+											goalX = goal.x
+											Direction = sign(goalX - x)
 											
+											show_debug_message("["+string(time.stream)+"] I have " +string(ds_stack_size(goal_queue)) + " goal to do!")
 											debug_log("My new goal is "+string(object_get_name(ds_stack_top(goal_queue).object_index)))
 											
 										break;
@@ -183,6 +189,26 @@ switch(states)
 									
 									
 								break
+							#endregion
+							
+							#region Door
+								case door:
+									states = states.idle
+								
+									DoorGID = goal								
+									DoorID = goal.ID
+									
+									ds_stack_pop(goal_queue)
+									
+									//	TEST CODE Lets go to another door TEST CODE
+									var _random = irandom_range(0,ds_list_size(guestController.door_list)-1)
+									while _random == DoorID _random = irandom_range(0,ds_list_size(guestController.door_list)-1)
+									
+									var new_door = guestController.door_list[| _random]
+									ds_stack_push(goal_queue,new_door)
+									
+								
+								break;
 							#endregion
 						}
 					
@@ -197,7 +223,12 @@ switch(states)
 	#region Elevator
 		case states.elevator:
 	
-			
+			//	If I have arrived
+			if Floor == goal.Floor {
+				debug_log("I have arrived at the floor of my goal: "+string(object_get_name(ds_stack_top(goal_queue).object_index)))
+				
+				states = states.walk
+			}
 	
 	
 		break;

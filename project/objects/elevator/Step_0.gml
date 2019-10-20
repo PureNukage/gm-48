@@ -26,6 +26,7 @@ switch(states)
 			for(var i=0;i<ds_list_size(passenger_list);i++) {
 				passenger_list[| i].Floor = Floor	
 			}
+			ds_list_clear(passenger_list)
 			current_floor = current_floor - floor_direction
 			floor_direction = 0
 			
