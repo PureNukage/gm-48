@@ -3,6 +3,7 @@ switch(mode)
 	case 2:
 		draw_set_color(c_white)
 		
+		draw_set_halign(fa_left)
 		draw_text(15,15,"frames: "+string(time.frames))
 		draw_text(15,30,"seconds: "+string(time.seconds))
 		draw_text(15,45,"minutes: "+string(time.minutes))
