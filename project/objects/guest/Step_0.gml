@@ -207,18 +207,31 @@ switch(states)
 								case door:
 									states = states.idle
 								
+									var old_door_GID = DoorGID
+								
 									DoorGID = goal								
 									DoorID = goal.ID
 									
+									ds_list_add(guestController.vacancy_list,old_door_GID)
+									ds_list_add(guestController.vacancy_list,DoorGID)
+									
 									ds_stack_pop(goal_queue)
 									
-									//	TEST CODE Lets go to another door TEST CODE
-									var _random = irandom_range(0,ds_list_size(guestController.door_list)-1)
-									while _random == DoorID _random = irandom_range(0,ds_list_size(guestController.door_list)-1)
+									instance_destroy()			
 									
-									var new_door = guestController.door_list[| _random]
-									ds_stack_push(goal_queue,new_door)
-									
+									//var _guest = spawn_guest()
+									//if _guest != -1 {
+											
+									//	if ds_list_size(guestController.vacancy_list) == 1 {
+									//		var _random = 0	
+									//	} else {
+									//		var _random = irandom_range(0,ds_list_size(guestController.vacancy_list)-1)	
+									//	}
+										
+									//	var new_door = guestController.vacancy_list[| _random]
+									//	ds_stack_push(_guest.goal_queue,new_door)
+									//	ds_list_delete(guestController.vacancy_list,_random)
+									//}	
 								
 								break;
 							#endregion
