@@ -98,22 +98,24 @@ switch(states)
 											//	Does this elevator come to my floor?
 											var comes_to_my_floor = 0
 											for(var elv=0;elv<guestController.elevator_list[| elev].floors;elv++) {
-												if guestController.elevator_list[| elev].floors_y[elv] == y {
+												if guestController.elevator_list[| elev].floors_y[elv]-64 == y {
 													comes_to_my_floor++		
 												}
 											}
 											if comes_to_my_floor > 0 {
 												var distance = abs(guestController.elevator_list[| elev].x - x)
-												ds_list_add(all_elevators_distance)
+												ds_list_add(all_elevators_distance,distance)
 											}
 										}
 									
 										var elev_id = 0
 										ds_list_sort(all_elevators_distance,true)
-										with elevator {
-											var _distance = abs(x - other.x)
-											if _distance == all_elevators_distance[| 0] {
-												elev_id = id	
+										for(var i=0;i<ds_list_size(guestController.elevator_list);i++) {
+											with guestController.elevator_list[| i] {
+												var _distance = abs(x - other.x)
+												if _distance == all_elevators_distance[| 0] {
+													elev_id = id	
+												}
 											}
 										}
 									
@@ -136,6 +138,8 @@ switch(states)
 											debug_log("direction: "+string(Direction))
 						
 											states = states.walk
+										} else {
+											debug_log("No elevator shafts on this floor! That... doesn't make any sense")	
 										}
 								
 								
@@ -257,7 +261,7 @@ switch(states)
 						
 												states = states.walk
 											} else {
-												debug_log("I should be doing to a shaft!")
+												//debug_log("I should be doing to a shaft!")
 											}
 										
 										}
