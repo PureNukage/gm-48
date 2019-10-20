@@ -119,6 +119,22 @@
             }
         },
         {
+            "Key": "2887656a-3081-4981-b735-42b0781fdf9b",
+            "Value": {
+                "id": "6b70650c-f6bd-4fb5-8590-0a899b9744ca",
+                "resourcePath": "sounds\\SFX__SpliceDoor2\\SFX__SpliceDoor2.yy",
+                "resourceType": "GMSound"
+            }
+        },
+        {
+            "Key": "296ba144-8fe9-46f7-8f3f-11dfbf56d508",
+            "Value": {
+                "id": "530932fe-9179-47b9-8fbd-6d20b7352657",
+                "resourcePath": "sounds\\SFX_GasLine_On\\SFX_GasLine_On.yy",
+                "resourceType": "GMSound"
+            }
+        },
+        {
             "Key": "39c060dc-4b71-4bd7-ab27-4ea81ecccee8",
             "Value": {
                 "id": "48602041-20be-4eef-a3cc-beed74574546",
@@ -159,6 +175,14 @@
             }
         },
         {
+            "Key": "544db478-f9f0-4f26-af5b-2c5764b01b5a",
+            "Value": {
+                "id": "a8aa97ac-4f64-401a-9556-b498bc0c9e34",
+                "resourcePath": "sounds\\SFX_SpliceYes\\SFX_SpliceYes.yy",
+                "resourceType": "GMSound"
+            }
+        },
+        {
             "Key": "55a5579a-a8ec-4be7-9609-e357a4ca17ee",
             "Value": {
                 "id": "6a945d98-777f-4423-8352-2dddca124247",
@@ -183,11 +207,27 @@
             }
         },
         {
+            "Key": "691efb89-2a42-4e7e-bf4f-7e7531651310",
+            "Value": {
+                "id": "50596853-b47f-44e6-a46e-006e4007e3ca",
+                "resourcePath": "sounds\\SFX_GasLine_Off\\SFX_GasLine_Off.yy",
+                "resourceType": "GMSound"
+            }
+        },
+        {
             "Key": "6ba3ee46-1d48-47a8-996a-b680c71baadf",
             "Value": {
                 "id": "a7d7feab-02b6-49d9-a590-b353b9a4856c",
                 "resourcePath": "scripts\\debug_log\\debug_log.yy",
                 "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "6e0aa19b-b7e5-4dd1-8a9c-abfd3dafd28b",
+            "Value": {
+                "id": "883c5db9-0d15-476f-833f-cc2b0abcc150",
+                "resourcePath": "sounds\\SFX_Mumble_2\\SFX_Mumble_2.yy",
+                "resourceType": "GMSound"
             }
         },
         {
@@ -207,11 +247,27 @@
             }
         },
         {
+            "Key": "77f77ded-e485-4625-a416-0398b2bc7bc0",
+            "Value": {
+                "id": "a241848b-9023-494a-865c-3ac3a0cd0139",
+                "resourcePath": "sounds\\SFX_SpliceBell_Ring\\SFX_SpliceBell_Ring.yy",
+                "resourceType": "GMSound"
+            }
+        },
+        {
             "Key": "7d6129fa-84f3-4161-8750-3748b4493485",
             "Value": {
                 "id": "80f1268e-8291-466e-8b75-4bb5acea67da",
                 "resourcePath": "objects\\time\\time.yy",
                 "resourceType": "GMObject"
+            }
+        },
+        {
+            "Key": "86bb2b26-66bc-4e8c-9799-71364bcff5ca",
+            "Value": {
+                "id": "ff6b4dab-ef83-4126-95e1-6941f5eed020",
+                "resourcePath": "sounds\\SFX__SpliceCryingNPC\\SFX__SpliceCryingNPC.yy",
+                "resourceType": "GMSound"
             }
         },
         {
@@ -228,6 +284,14 @@
                 "id": "7cf4d90d-d1f1-41fb-b611-7b6d70fe1530",
                 "resourcePath": "scripts\\spawn_guest\\spawn_guest.yy",
                 "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "91d0c8f8-1804-4c49-a2df-3da10b697209",
+            "Value": {
+                "id": "1ee26731-f0b0-40b3-81f9-884553266530",
+                "resourcePath": "sounds\\SFX_Mumble_1\\SFX_Mumble_1.yy",
+                "resourceType": "GMSound"
             }
         },
         {
@@ -295,6 +359,14 @@
             }
         },
         {
+            "Key": "b30ef826-0440-4960-a5e8-cba2aed993a6",
+            "Value": {
+                "id": "a1089120-cd47-4526-b94e-0279ac6d71d4",
+                "resourcePath": "sounds\\SFX_Mumble_3\\SFX_Mumble_3.yy",
+                "resourceType": "GMSound"
+            }
+        },
+        {
             "Key": "b4fc90e0-e474-4333-9d7c-ba829998be32",
             "Value": {
                 "id": "68156095-622d-42b9-9950-a1787a3cee81",
@@ -343,6 +415,22 @@
             }
         },
         {
+            "Key": "ccdef201-8164-4749-8cf6-5196f7481f89",
+            "Value": {
+                "id": "757c8252-9448-4f5d-9808-dd67046cdbf6",
+                "resourcePath": "sounds\\SFX_Door\\SFX_Door.yy",
+                "resourceType": "GMSound"
+            }
+        },
+        {
+            "Key": "cf168ab4-2080-482c-8907-c248517b494a",
+            "Value": {
+                "id": "a8f425f0-b31f-4a09-9501-fee998970734",
+                "resourcePath": "sounds\\SFX_SpliceBackground_Crowd\\SFX_SpliceBackground_Crowd.yy",
+                "resourceType": "GMSound"
+            }
+        },
+        {
             "Key": "d4d2f5c8-d3f8-4c30-a9ae-00fc33495560",
             "Value": {
                 "id": "3a8db075-3d61-4b19-a5f8-c7f1c0199c65",
@@ -375,6 +463,22 @@
             }
         },
         {
+            "Key": "e888f9b7-e033-4bad-b8b9-362bff6b11d5",
+            "Value": {
+                "id": "e3b35bb4-618b-40e5-a203-05dda385fd8c",
+                "resourcePath": "sounds\\SFX_Select_Menu\\SFX_Select_Menu.yy",
+                "resourceType": "GMSound"
+            }
+        },
+        {
+            "Key": "ead77c4d-5b43-484b-841a-6933a28baf5b",
+            "Value": {
+                "id": "b131e1e2-a64f-479e-af49-be02ad26ae1f",
+                "resourcePath": "sounds\\SFX__Splice_FootstepsCarpet_Walking\\SFX__Splice_FootstepsCarpet_Walking.yy",
+                "resourceType": "GMSound"
+            }
+        },
+        {
             "Key": "ebfb5478-9c55-4d84-9308-542f7a660b55",
             "Value": {
                 "id": "15f60cf3-7f25-4fc1-9159-ddd224e68a53",
@@ -388,6 +492,22 @@
                 "id": "1a0671cf-928b-4f38-9503-a309a0712097",
                 "resourcePath": "options\\mac\\options_mac.yy",
                 "resourceType": "GMMacOptions"
+            }
+        },
+        {
+            "Key": "f72f9e20-5363-46a1-85a6-f411f42383b2",
+            "Value": {
+                "id": "8884a893-fdbc-4568-b024-ed30f29da6e3",
+                "resourcePath": "sounds\\SFX_SpliceElevator\\SFX_SpliceElevator.yy",
+                "resourceType": "GMSound"
+            }
+        },
+        {
+            "Key": "fb4f9d0a-d618-4d1f-9cad-27bf54c68b07",
+            "Value": {
+                "id": "c1848430-a381-4e91-a072-e91f52f372e9",
+                "resourcePath": "sounds\\SFX_Start_Game\\SFX_Start_Game.yy",
+                "resourceType": "GMSound"
             }
         }
     ],
