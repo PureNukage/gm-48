@@ -265,7 +265,7 @@ switch(states)
 						
 												states = states.walk
 											} else {
-												//debug_log("I should be doing to a shaft!")
+												//debug_log("I should be going to a shaft!")
 											}
 										
 										}
@@ -280,23 +280,44 @@ switch(states)
 									//	What kind of goalpost
 									switch(goal.goal_type)
 									{
-										//	I just boarded an elevator
-										case goal_type.elevator_board:
+										#region	I just boarded an elevator
+											case goal_type.elevator_board:
 										
-											debug_log("I just boarded an elevator")
+												debug_log("I just boarded an elevator")
 											
-											states = states.elevator
+												states = states.elevator
 											
-											instance_destroy(goal)
-											ds_stack_pop(goal_queue)
-											goal = ds_stack_top(goal_queue)
-											goalX = goal.x
-											Direction = sign(goalX - x)
+												instance_destroy(goal)
+												ds_stack_pop(goal_queue)
+												goal = ds_stack_top(goal_queue)
+												goalX = goal.x
+												Direction = sign(goalX - x)
 											
-											show_debug_message("["+string(time.stream)+"] I have " +string(ds_stack_size(goal_queue)) + " goal to do!")
-											debug_log("My new goal is "+string(object_get_name(ds_stack_top(goal_queue).object_index)))
+												debug_log("I have " +string(ds_stack_size(goal_queue)) + " goal to do!")
+												debug_log("My new goal is "+string(object_get_name(ds_stack_top(goal_queue).object_index)))
 											
-										break;
+											break;
+										#endregion
+										
+										#region	I am doing something
+											case goal_type.do_something:
+												
+												states = states.idle_activity
+												
+												idle_time = irandom_range(60,140)
+												
+												instance_destroy(goal)
+												ds_stack_pop(goal_queue)
+												
+												ds_stack_push(goal_queue,DoorGID)
+												
+												goal = ds_stack_top(goal_queue)
+												
+												Direction = 0
+												
+												
+											break
+										#endregion
 									}
 									
 									
@@ -305,19 +326,22 @@ switch(states)
 							
 							#region Door
 								case door:
-									states = states.idle
 								
-									var old_door_GID = DoorGID
+									states = states.indoors
+									
+									image_alpha = 0
+								
+									//var old_door_GID = DoorGID
 								
 									DoorGID = goal								
 									DoorID = goal.ID
 									
-									ds_list_add(guestController.vacancy_list,old_door_GID)
-									ds_list_add(guestController.vacancy_list,DoorGID)
+									//ds_list_add(guestController.vacancy_list,old_door_GID)
+									//ds_list_add(guestController.vacancy_list,DoorGID)
 									
 									ds_stack_pop(goal_queue)
 									
-									instance_destroy()												
+									//instance_destroy()												
 								
 								break;
 							#endregion
@@ -343,5 +367,36 @@ switch(states)
 	
 	
 		break;
+	#endregion
+	
+	#region	Indoors
+		case states.indoors:
+			
+			x = DoorGID.x
+			
+			
+		
+		break;
+	#endregion
+	
+	#region Idle Activity
+		case states.idle_activity:
+			
+			if idle_time > 0 idle_time--
+			else {
+				
+				//	Idling is over! Heading back to my room
+				debug_log("Idle is over. Heading back to my door")
+				
+				ds_stack_push(goal_queue,DoorGID)
+				
+				states = states.idle
+				
+			}
+			
+			
+			
+			
+		break
 	#endregion
 }

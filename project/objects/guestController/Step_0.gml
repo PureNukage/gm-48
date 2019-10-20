@@ -61,19 +61,40 @@ else if time.stream > 1 {
 			var _guest = spawn_guest()
 			if _guest != -1 {
 				
-				if ds_list_size(guestController.vacancy_list) > 0 {
-					if ds_list_size(guestController.vacancy_list) == 1 {
-						var _random = 0	
-					} else {
-						var _random = irandom_range(0,ds_list_size(guestController.vacancy_list)-1)	
-					}
-										
-					var new_door = guestController.vacancy_list[| _random]
-					ds_stack_push(_guest.goal_queue,new_door)
-					ds_list_delete(guestController.vacancy_list,_random)
+				//	Let's send him somewhere random either above him or under him or on his floor
+
+				var above_under_same = irandom_range(-1,1)
+				var hypothetical_new_floor = _guest.Floor + above_under_same
+				if hypothetical_new_floor > 0 and hypothetical_new_floor < ds_list_size(floors_list)-1 {
+					var _floor = hypothetical_new_floor
 				} else {
-					debug_log("Nowhere to send this guy!")
+					var _floor = _guest.Floor
 				}
+				
+				var _x = irandom_range(32,room_width-32)
+				
+				var _goalpost = instance_create_layer(_x,floors_list[| _floor],"Instances_controller",goalpost)
+				
+				_goalpost.Floor = _floor
+				_goalpost.goal_type = goal_type.do_something
+				
+				_guest.goal = _goalpost
+				ds_stack_push(_guest.goal_queue,_goalpost)
+				
+				
+				//if ds_list_size(guestController.vacancy_list) > 0 {
+				//	if ds_list_size(guestController.vacancy_list) == 1 {
+				//		var _random = 0	
+				//	} else {
+				//		var _random = irandom_range(0,ds_list_size(guestController.vacancy_list)-1)	
+				//	}
+										
+				//	var new_door = guestController.vacancy_list[| _random]
+				//	ds_stack_push(_guest.goal_queue,new_door)
+				//	ds_list_delete(guestController.vacancy_list,_random)
+				//} else {
+				//	debug_log("Nowhere to send this guy!")
+				//}
 			}
 		}
 		

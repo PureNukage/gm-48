@@ -9,6 +9,8 @@ hspd = 0
 
 movespeed = 3
 
+idle_time = 0
+
 goalX = 0
 goal = 0
 goal_queue = ds_stack_create()

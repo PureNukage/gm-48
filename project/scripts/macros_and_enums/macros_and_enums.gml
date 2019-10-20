@@ -1,12 +1,14 @@
 enum states {
 	idle,
+	idle_activity,
 	elevator,
-	
-	walk
+	indoors,
+	walk,
 
 }
 
 enum goal_type {
 	elevator_board,
+	do_something
 	
 }
