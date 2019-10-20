@@ -21,6 +21,8 @@ if ds_list_size(guestController.vacancy_list) > 0 {
 	_guest.DoorID = new_door.ID
 	_guest.DoorGID = new_door
 	
+	new_door.vacant = false
+	
 	ds_list_delete(guestController.vacancy_list,_random)
 										
 	return _guest
