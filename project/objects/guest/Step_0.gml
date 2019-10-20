@@ -222,6 +222,8 @@ switch(states)
 											ds_stack_push(goal_queue,_goalpost)
 											goal = ds_stack_top(goal_queue)
 											goalX = goal.x
+											
+											Direction = sign(goalX - x)
 										
 											debug_log("My new goal is "+string(object_get_name(ds_stack_top(goal_queue).object_index)))
 										
