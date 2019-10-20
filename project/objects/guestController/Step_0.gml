@@ -21,7 +21,7 @@
 	
 		//	How many guests we got and assign floors to doors
 		for(var i=0;i<ds_list_size(door_list);i++) {
-			guest_list[| i] = door_list[| i]
+			guest_list[| i] = -1
 			for(var f=0;f<ds_list_size(floors_list);f++) {
 				if floors_list[| f] == door_list[| i].y+sprite_height {
 					door_list[| i].Floor = f
@@ -54,26 +54,24 @@ else if time.stream > 1 {
 
 	#region Spawn guest(s)
 	
-		var total_guests = 1
-	
-		if instance_number(guest) < total_guests {
+		if instance_number(guest) < guest_total {
 		
-			var _random = irandom_range(0,ds_list_size(door_list)-1)
-			var _random2 = irandom_range(0,ds_list_size(door_list)-1)
+			var _random_assigned_door = irandom_range(0,ds_list_size(door_list)-1)
+			var _random_goal_door = irandom_range(0,ds_list_size(door_list)-1)
 			
-			while _random2 == _random _random2 = irandom_range(0,ds_list_size(door_list)-1)
+			while _random_goal_door == _random_assigned_door _random_goal_door = irandom_range(0,ds_list_size(door_list)-1)
 		
-			var which_door = door_list[| _random]
+			var which_door = door_list[| _random_assigned_door]
 		
 			var _guest = instance_create_layer(which_door.x,which_door.y,"Instances_controller",guest)
 		
-			show_debug_message("["+string(time.stream)+"] which door GID: "+string(which_door))
-			show_debug_message("["+string(time.stream)+"] door assigned floor: "+string(which_door.Floor))
+			debug_log("which door GID: "+string(which_door))
+			debug_log("door assigned floor: "+string(which_door.Floor))
 			_guest.Floor = which_door.Floor
-			_guest.DoorID = _random
-			_guest.DoorGID = door_list[| _random]
+			_guest.DoorID = _random_assigned_door
+			_guest.DoorGID = door_list[| _random_assigned_door]
 		
-			ds_stack_push(_guest.goal_queue,door_list[| _random2])
+			ds_stack_push(_guest.goal_queue,door_list[| _random_goal_door])
 		}
 		
 	#endregion

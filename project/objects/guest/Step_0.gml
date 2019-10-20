@@ -6,7 +6,7 @@ switch(states)
 		#region	I got something to do!	
 			if ds_stack_size(goal_queue) > 0 {
 		
-				show_debug_message("["+string(time.stream)+"] I have " +string(ds_stack_size(goal_queue)) + " goal to do!")
+				debug_log("I have " +string(ds_stack_size(goal_queue)) + " goal to do!")
 		
 				goal = ds_stack_top(goal_queue)
 		
@@ -18,7 +18,7 @@ switch(states)
 					case -1:	//	My goal is above me
 					case 1:		//	My goal is under me
 				
-					show_debug_message("["+string(time.stream)+"] My goal is above or under me!")
+					debug_log("My goal is above or under me!")
 					#region Elevator check
 				
 						#region	Lets check if any elevators are on this floor
@@ -106,6 +106,8 @@ switch(states)
 					break;
 				}
 			
+			} else {
+				debug_log("I got nothing to do!")	
 			}
 		
 		#endregion
