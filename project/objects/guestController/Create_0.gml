@@ -7,6 +7,4 @@ elevator_list = ds_list_create()
 
 guests_starting = 1			//	Starting number of guests in the level (probably shouldn't exceed #doors in level)
 
-guests_clamp = 0		//	Maximum number of guests out of their doors at once (larger == harder, presumably)
-
-guests_total = 0		//	Total number of guests 
+guests_active_clamp = 4		//	Maximum number of guests out of their doors at once (larger == harder, presumably)

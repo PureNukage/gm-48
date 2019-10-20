@@ -87,21 +87,17 @@ else if time.stream > 1 {
 	#endregion
 	
 	#region	Give a guest a task
-	
-		//	Are there even any Guests indoors?
-		var indoor_guest_list = ds_list_create()
-		for(var i=0;i<ds_list_size(guest_list);i++) {
-			if guest_list[| i].states == states.indoors {
-				ds_list_add(indoor_guest_list,id)	
-			}
-		}
 		
-	
-		if guests_total > 0 and ds_list_size(indoor_guest_list) > 0 {
+		var guests_total = ds_list_size(guest_list)
+		var active_guests_total = ds_list_size(guest_active_list)
+		var indoors_guests_total = ds_list_size(guest_indoors_list)
+		if guests_total > 0 and indoors_guests_total > 0 and active_guests_total < guests_active_clamp {
 			debug_log("I am giving a Guest a task")
 			
-				var _random = irandom_range(0,ds_list_size(guest_list)-1)
-				var _guest = ds_list_find_value(guest_list,_random)
+				var _random
+				if guests_total == 1 _random = 0
+				else _random = irandom_range(0,ds_list_size(guest_list)-1)
+				var _guest = ds_list_find_value(guest_list,_random) 
 			
 				//	Let's send him somewhere random either above him or under him or on his floor
 
@@ -120,8 +116,15 @@ else if time.stream > 1 {
 				_goalpost.Floor = _floor
 				_goalpost.goal_type = goal_type.do_something
 				
+				//	Deal with guests lists
+				ds_list_add(guest_active_list,_guest)
+				ds_list_delete(guest_indoors_list,ds_list_find_index(guest_indoors_list,_guest))
+				
+				
 				_guest.goal = _goalpost
 				ds_stack_push(_guest.goal_queue,_goalpost)
+				_guest.states = states.idle
+				_guest.image_alpha = 1
 			
 		}
 	

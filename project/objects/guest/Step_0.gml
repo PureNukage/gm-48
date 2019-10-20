@@ -325,6 +325,9 @@ switch(states)
 								
 									states = states.indoors
 									
+									ds_list_delete(guestController.guest_active_list,ds_list_find_index(guestController.guest_active_list,id))
+									ds_list_add(guestController.guest_indoors_list,id)
+									
 									image_alpha = 0
 								
 									//var old_door_GID = DoorGID
