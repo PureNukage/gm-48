@@ -3,6 +3,7 @@ if mode == true {
 	draw_set_color(c_black)
 
 	with player {
+		draw_text(x-64,y-135,"hp :"+string(hp))
 		draw_text(x-64,y-120,"y: "+string(y))
 		draw_text(x-64,y-105,"Floor: "+string(Floor))	
 	}

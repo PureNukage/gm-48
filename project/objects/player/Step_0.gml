@@ -53,4 +53,5 @@ switch(states)
 	#endregion
 }
 
-hp = ds_list_size(guestController.door_list) - ds_list_size(guestController.guest_list)
+//hp = ds_list_size(guestController.door_list)-(ds_list_size(guestController.door_list) - ds_list_size(guestController.guest_list))
+hp = ds_list_size(guestController.door_list)-(ds_list_size(guestController.door_list) - ds_list_size(guestController.guest_list))
