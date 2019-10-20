@@ -57,7 +57,28 @@ switch(states)
 			current_floor = current_floor - floor_direction
 			floor_direction = 0
 			
+			//	Calculate arrows
+			if current_floor == 0 {
+				//	No more floors under me				
+				down_arrow = 0	
+			} else {
+				down_arrow = 1	
+			}
+			var _floor = current_floor + 1
+			if _floor < floors {
+				up_arrow = 1	
+			} else {
+				up_arrow = 0	
+			}
+			
 		}
 	break
 	#endregion
 }
+
+////	Calculate Arrows
+//var floor_above_me = current_floor + 1
+//if floor_above_me + 1 > floors up_arrow = 0
+
+//var floor_under_me = current_floor - 1
+//if floor_under_me - 1 < 0 down_arrow = 0
