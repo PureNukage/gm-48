@@ -102,6 +102,12 @@ switch(states)
 					break;
 					case 0:		//	My goal is on the same floor as me
 					debug_log("My goal is on the same floor as me")
+						goalX = goal.x
+						Direction = sign(goalX - x)
+						debug_log("goalX "+string(goalX))									
+						debug_log("direction: "+string(Direction))
+						states = states.walk
+						
 			
 					break;
 				}
