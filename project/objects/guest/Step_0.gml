@@ -307,11 +307,7 @@ switch(states)
 												idle_time = irandom_range(60,140)
 												
 												instance_destroy(goal)
-												ds_stack_pop(goal_queue)
-												
-												ds_stack_push(goal_queue,DoorGID)
-												
-												goal = ds_stack_top(goal_queue)
+												ds_stack_pop(goal_queue)																		
 												
 												Direction = 0
 												
@@ -339,7 +335,7 @@ switch(states)
 									//ds_list_add(guestController.vacancy_list,old_door_GID)
 									//ds_list_add(guestController.vacancy_list,DoorGID)
 									
-									ds_stack_pop(goal_queue)
+									ds_stack_clear(goal_queue)
 									
 									//instance_destroy()												
 								

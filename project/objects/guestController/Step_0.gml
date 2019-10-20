@@ -56,7 +56,7 @@ else if time.stream > 1 {
 
 	#region Spawn guest(s)
 	
-		if instance_number(guest) < guest_total {
+		if instance_number(guest) < guests_starting {
 			
 			var _guest = spawn_guest()
 			if _guest != -1 {
@@ -81,23 +81,52 @@ else if time.stream > 1 {
 				_guest.goal = _goalpost
 				ds_stack_push(_guest.goal_queue,_goalpost)
 				
-				
-				//if ds_list_size(guestController.vacancy_list) > 0 {
-				//	if ds_list_size(guestController.vacancy_list) == 1 {
-				//		var _random = 0	
-				//	} else {
-				//		var _random = irandom_range(0,ds_list_size(guestController.vacancy_list)-1)	
-				//	}
-										
-				//	var new_door = guestController.vacancy_list[| _random]
-				//	ds_stack_push(_guest.goal_queue,new_door)
-				//	ds_list_delete(guestController.vacancy_list,_random)
-				//} else {
-				//	debug_log("Nowhere to send this guy!")
-				//}
 			}
 		}
 		
+	#endregion
+	
+	#region	Give a guest a task
+	
+		//	Are there even any Guests indoors?
+		var indoor_guest_list = ds_list_create()
+		for(var i=0;i<ds_list_size(guest_list);i++) {
+			if guest_list[| i].states == states.indoors {
+				ds_list_add(indoor_guest_list,id)	
+			}
+		}
+		
+	
+		if guests_total > 0 and ds_list_size(indoor_guest_list) > 0 {
+			debug_log("I am giving a Guest a task")
+			
+				var _random = irandom_range(0,ds_list_size(guest_list)-1)
+				var _guest = ds_list_find_value(guest_list,_random)
+			
+				//	Let's send him somewhere random either above him or under him or on his floor
+
+				var above_under_same = irandom_range(-1,1)
+				var hypothetical_new_floor = _guest.Floor + above_under_same
+				if hypothetical_new_floor > 0 and hypothetical_new_floor < ds_list_size(floors_list)-1 {
+					var _floor = hypothetical_new_floor
+				} else {
+					var _floor = _guest.Floor
+				}
+				
+				var _x = irandom_range(32,room_width-32)
+				
+				var _goalpost = instance_create_layer(_x,floors_list[| _floor],"Instances_controller",goalpost)
+				
+				_goalpost.Floor = _floor
+				_goalpost.goal_type = goal_type.do_something
+				
+				_guest.goal = _goalpost
+				ds_stack_push(_guest.goal_queue,_goalpost)
+			
+		}
+	
+	
+	
 	#endregion
 	
 }
