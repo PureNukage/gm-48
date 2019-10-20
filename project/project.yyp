@@ -111,6 +111,14 @@
             }
         },
         {
+            "Key": "25663ed3-92d6-4f98-b1fe-739593b2b97c",
+            "Value": {
+                "id": "2f0e2bbc-66b5-49f6-a24a-f573512e7e51",
+                "resourcePath": "objects\\menu\\menu.yy",
+                "resourceType": "GMObject"
+            }
+        },
+        {
             "Key": "42cce9c5-8287-44d3-a454-b1cd48406c61",
             "Value": {
                 "id": "2cafdfe3-e0d0-43a2-bf92-3a3449719210",
@@ -124,6 +132,14 @@
                 "id": "bbff3102-0802-4c6e-9ce4-1da00e908888",
                 "resourcePath": "views\\4be13dc3-8d13-48ca-a3f8-90ac25a00c6a.yy",
                 "resourceType": "GMFolder"
+            }
+        },
+        {
+            "Key": "4cba72ee-c123-4842-ab28-3a8fd94f4110",
+            "Value": {
+                "id": "684688bd-2911-4629-b40b-42310a174701",
+                "resourcePath": "rooms\\room1\\room1.yy",
+                "resourceType": "GMRoom"
             }
         },
         {
@@ -263,6 +279,14 @@
             }
         },
         {
+            "Key": "b0161519-5067-46ea-8d14-1ea4e4b9bdd1",
+            "Value": {
+                "id": "f8bc70f7-59f4-4d59-a621-0fb51fb02dec",
+                "resourcePath": "fonts\\fnt_title\\fnt_title.yy",
+                "resourceType": "GMFont"
+            }
+        },
+        {
             "Key": "b4fc90e0-e474-4333-9d7c-ba829998be32",
             "Value": {
                 "id": "68156095-622d-42b9-9950-a1787a3cee81",
@@ -319,11 +343,27 @@
             }
         },
         {
+            "Key": "dad7799b-0223-4e3b-acd8-13eb43c57a37",
+            "Value": {
+                "id": "3692b93c-eecf-45c6-888e-5cf01e30742b",
+                "resourcePath": "fonts\\fnt_start\\fnt_start.yy",
+                "resourceType": "GMFont"
+            }
+        },
+        {
             "Key": "e461d63c-b2ac-4586-964c-2736311e5f80",
             "Value": {
                 "id": "a1307ec3-0969-4433-9624-bb8d092a0e85",
                 "resourcePath": "sprites\\s_whitecube\\s_whitecube.yy",
                 "resourceType": "GMSprite"
+            }
+        },
+        {
+            "Key": "e576d845-1133-43ff-ba17-7542d31db7d5",
+            "Value": {
+                "id": "f1d276fc-9bf5-4fa3-a9b9-989fa2d62cc7",
+                "resourcePath": "objects\\gui\\gui.yy",
+                "resourceType": "GMObject"
             }
         },
         {
