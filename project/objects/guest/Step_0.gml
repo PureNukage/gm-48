@@ -21,24 +21,26 @@ switch(states)
 					#region Elevator check
 				
 						#region	Lets check if any elevators are on this floor
+							var elevators_on_this_floor = ds_list_create()						
 							for(var elev=0;elev<ds_list_size(guestController.elevator_list);elev++) {
 								var _elevator = guestController.elevator_list[| elev]
-								var elevators_on_this_floor = ds_list_create()
 						
 								//	This elevators on the same floor as us!
 								if _elevator.Floor == Floor {	
 									show_debug_message("["+string(time.stream)+"] Elevator "+string(_elevator)+" is on the same floor as me")								
-									ds_list_add(elevators_on_this_floor,_elevator.id)
+									ds_list_add(elevators_on_this_floor,_elevator)
 								}
 							}
+							
+							var debug_elevators_on_this_floor_size = ds_list_size(elevators_on_this_floor)
+							debug_log("There are "+string(debug_elevators_on_this_floor_size)+" elevators on my floor")
+							
 						#endregion
 				
 						#region	We have an elevator on our floor		
 					
 							if ds_list_size(elevators_on_this_floor) > 0 {
-								var how_many = ds_list_size(elevators_on_this_floor)
-								
-								debug_log("There are "+string(how_many)+" elevators on my floor")	
+								var how_many = ds_list_size(elevators_on_this_floor)	
 								
 								#region	Sort elevators into closest -> furthest
 									var distance_list = ds_list_create()						
@@ -122,7 +124,33 @@ switch(states)
 				if next_pixel != goalX {
 					x += sign(hspd)	
 				} else { 
-					hspd = 0
+					#region	Arrived at goal
+						hspd = 0
+						
+						//	What object was our goal?
+						switch(goal.object_index)
+						{
+							#region Elevator
+								case elevator:
+									//	Check if elevators here, if so get on it
+									if (goal.y == y) {
+										var where_im_standing = irandom_range(goal.x-(sprite_width/2)+32,goal.x+(sprite_width/2)-32)
+										var _goalpost = instance_create_layer(where_im_standing,y,"Instances_controller",goalpost)
+										_goalpost.goal_type = goal_type.elevator_board
+										
+										ds_stack_push(goal_queue,_goalpost)
+										goal = ds_stack_top(goal_queue)
+										goalX = goal.x
+										
+										debug_log("I am boarding an elevator")
+									}
+								
+								
+								break;
+							#endregion
+						}
+					
+					#endregion
 				}	
 			}
 	

@@ -5,3 +5,8 @@ enum states {
 	walk
 
 }
+
+enum goal_type {
+	elevator_board,
+	
+}

@@ -279,6 +279,14 @@
             }
         },
         {
+            "Key": "c4905467-6e5b-4ce4-9d8c-85e2ba48ecb8",
+            "Value": {
+                "id": "acab927b-dc14-4bc1-82aa-cc37903d9f72",
+                "resourcePath": "objects\\goalpost\\goalpost.yy",
+                "resourceType": "GMObject"
+            }
+        },
+        {
             "Key": "c528d814-0ecf-4fb2-930c-315356e04190",
             "Value": {
                 "id": "50e1ecfa-f1ca-4635-9090-c87b69cb82cf",
