@@ -36,112 +36,115 @@ switch(states)
 							var debug_elevators_on_this_floor_size = ds_list_size(elevators_on_this_floor)
 							debug_log("There are "+string(debug_elevators_on_this_floor_size)+" elevators on my floor")
 							
-						#endregion
-				
-						#region	We have an elevator on our floor		
+						#endregion				
 					
 							if ds_list_size(elevators_on_this_floor) > 0 {
-								var how_many = ds_list_size(elevators_on_this_floor)	
+								#region We have an elevator on this floor 
+									var how_many = ds_list_size(elevators_on_this_floor)	
 								
-								#region	Sort elevators into closest -> furthest
-									var distance_list = ds_list_create()						
-									for(var elv=0;elv<how_many;elv++) {
+									#region	Sort elevators into closest -> furthest
+										var distance_list = ds_list_create()						
+										for(var elv=0;elv<how_many;elv++) {
 							
-										//	Distance between guest and elevator
-										var distance = abs(elevators_on_this_floor[| elv].x - x)
-										debug_log("Elevator "+string(elevators_on_this_floor[| elv])+" is "+string(distance)+" away from me")
-										ds_list_add(distance_list,distance)
-									}
+											//	Distance between guest and elevator
+											var distance = abs(elevators_on_this_floor[| elv].x - x)
+											debug_log("Elevator "+string(elevators_on_this_floor[| elv])+" is "+string(distance)+" away from me")
+											ds_list_add(distance_list,distance)
+										}
 							
-									//	Copy this list and then sort it
-									var distance_list_sorted = ds_list_create()
-									ds_list_copy(distance_list_sorted,distance_list)
-									ds_list_sort(distance_list_sorted,true)
+										//	Copy this list and then sort it
+										var distance_list_sorted = ds_list_create()
+										ds_list_copy(distance_list_sorted,distance_list)
+										ds_list_sort(distance_list_sorted,true)
 						
+									#endregion
+							
+									#region	Make this elevator our goal and head into the walk state
+						
+										var closest_elevator_distance = distance_list_sorted[| 0]
+										var closest_elevator_before_sorting = ds_list_find_index(distance_list,closest_elevator_distance)
+										var closest_elevator = elevators_on_this_floor[| closest_elevator_before_sorting]
+							
+										ds_stack_push(goal_queue,closest_elevator)
+										goal = closest_elevator
+						
+										var which_side_of_elevator = 0
+										var which_side_of_elevator_raw = sign(closest_elevator.x - x)
+										if which_side_of_elevator_raw == -1 which_side_of_elevator = 1
+										else which_side_of_elevator = 0
+									
+										debug_log("moving towards goal! name: "+string(object_get_name(goal.object_index))+" , GID: "+string(goal))
+										debug_log("taking the "+string(which_side_of_elevator)+" elevator shaft")
+									
+										goalX = goal.shaft[which_side_of_elevator]
+										Direction = sign(goalX - x)
+										goalX += sign(Direction)*-31
+										debug_log("goalX "+string(goalX))									
+										debug_log("direction: "+string(Direction))
+						
+										states = states.walk
+						
+									#endregion				
 								#endregion
-							
-								#region	Make this elevator our goal and head into the walk state
-						
-									var closest_elevator_distance = distance_list_sorted[| 0]
-									var closest_elevator_before_sorting = ds_list_find_index(distance_list,closest_elevator_distance)
-									var closest_elevator = elevators_on_this_floor[| closest_elevator_before_sorting]
-							
-									ds_stack_push(goal_queue,closest_elevator)
-									goal = closest_elevator
-						
-									var which_side_of_elevator = 0
-									var which_side_of_elevator_raw = sign(closest_elevator.x - x)
-									if which_side_of_elevator_raw == -1 which_side_of_elevator = 1
-									else which_side_of_elevator = 0
-									
-									debug_log("moving towards goal! name: "+string(object_get_name(goal.object_index))+" , GID: "+string(goal))
-									debug_log("taking the "+string(which_side_of_elevator)+" elevator shaft")
-									
-									goalX = goal.shaft[which_side_of_elevator]
-									Direction = sign(goalX - x)
-									goalX += sign(Direction)*-31
-									debug_log("goalX "+string(goalX))									
-									debug_log("direction: "+string(Direction))
-						
-									states = states.walk
-						
-								#endregion				
 					
-							} 
-				
-						#endregion		
-					
-						#region No elevators on this floor
-							else {
+							} else {
+								#region	No elevators on this floor
 								
-								#region	Guest waits at elevator shaft
-									var all_elevators_distance = ds_list_create()
+									#region	Guest waits at elevator shaft
+										var all_elevators_distance = ds_list_create()
 									
-									//	Find nearest elevator shaft 
-									for(var elev=0;elev<ds_list_size(guestController.elevator_list);elev++) {
-										//	Does this elevator come to my floor?
-										var comes_to_my_floor = 0
-										for(var elv=0;elv<guestController.elevator_list[| elev].floors;elv++) {
-											if guestController.elevator_list[| elev].floors_y[elv] == y {
-												comes_to_my_floor++		
+										//	Find nearest elevator shaft 
+										for(var elev=0;elev<ds_list_size(guestController.elevator_list);elev++) {
+											//	Does this elevator come to my floor?
+											var comes_to_my_floor = 0
+											for(var elv=0;elv<guestController.elevator_list[| elev].floors;elv++) {
+												if guestController.elevator_list[| elev].floors_y[elv] == y {
+													comes_to_my_floor++		
+												}
+											}
+											if comes_to_my_floor > 0 {
+												var distance = abs(guestController.elevator_list[| elev].x - x)
+												ds_list_add(all_elevators_distance)
 											}
 										}
-										if comes_to_my_floor > 0 {
-											var distance = abs(guestController.elevator_list[| elev].x - x)
-											ds_list_add(all_elevators_distance)
+									
+										var elev_id = 0
+										ds_list_sort(all_elevators_distance,true)
+										with elevator {
+											var _distance = abs(x - other.x)
+											if _distance == all_elevators_distance[| 0] {
+												elev_id = id	
+											}
 										}
-									}
-									ds_list_sort(all_elevators_distance,true)
-									with elevator {
-										if x == all_elevators_distance[| 0] {
-											var elev_id = id	
+									
+										if elev_id != 0 {
+											ds_stack_push(goal_queue,elev_id)
+											goal = elev_id
+						
+											var which_side_of_elevator = 0
+											var which_side_of_elevator_raw = sign(elev_id.x - x)
+											if which_side_of_elevator_raw == -1 which_side_of_elevator = 1
+											else which_side_of_elevator = 0
+									
+											debug_log("moving towards goal! name: "+string(object_get_name(goal.object_index))+" , GID: "+string(goal))
+											debug_log("taking the "+string(which_side_of_elevator)+" elevator shaft")
+									
+											goalX = goal.shaft[which_side_of_elevator]
+											Direction = sign(goalX - x)
+											goalX += sign(Direction)*-31
+											debug_log("goalX "+string(goalX))									
+											debug_log("direction: "+string(Direction))
+						
+											states = states.walk
 										}
-									}
-									
-									ds_stack_push(goal_queue,elev_id)
-									goal = elev_id
-						
-									var which_side_of_elevator = 0
-									var which_side_of_elevator_raw = sign(elev_id.x - x)
-									if which_side_of_elevator_raw == -1 which_side_of_elevator = 1
-									else which_side_of_elevator = 0
-									
-									debug_log("moving towards goal! name: "+string(object_get_name(goal.object_index))+" , GID: "+string(goal))
-									debug_log("taking the "+string(which_side_of_elevator)+" elevator shaft")
-									
-									goalX = goal.shaft[which_side_of_elevator]
-									Direction = sign(goalX - x)
-									goalX += sign(Direction)*-31
-									debug_log("goalX "+string(goalX))									
-									debug_log("direction: "+string(Direction))
-						
-									states = states.walk
 								
 								
+									#endregion	
+									
 								#endregion
-							}
-						#endregion
-					
+							}	
+						
+				
 					#endregion
 				
 					break;
@@ -153,7 +156,6 @@ switch(states)
 						debug_log("direction: "+string(Direction))
 						states = states.walk
 						
-			
 					break;
 				}
 			
@@ -254,6 +256,8 @@ switch(states)
 												debug_log("direction: "+string(Direction))
 						
 												states = states.walk
+											} else {
+												debug_log("I should be doing to a shaft!")
 											}
 										
 										}
