@@ -95,9 +95,9 @@ else if time.stream > 1 {
 			debug_log("I am giving a Guest a task")
 			
 				var _random
-				if guests_total == 1 _random = 0
-				else _random = irandom_range(0,ds_list_size(guest_list)-1)
-				var _guest = ds_list_find_value(guest_list,_random) 
+				if ds_list_size(guest_indoors_list) == 1 _random = 0
+				else _random = irandom_range(0,ds_list_size(guest_indoors_list)-1)
+				var _guest = ds_list_find_value(guest_indoors_list,_random) 
 			
 				//	Let's send him somewhere random either above him or under him or on his floor
 
@@ -118,8 +118,7 @@ else if time.stream > 1 {
 				
 				//	Deal with guests lists
 				ds_list_add(guest_active_list,_guest)
-				ds_list_delete(guest_indoors_list,ds_list_find_index(guest_indoors_list,_guest))
-				
+				ds_list_delete(guest_indoors_list,ds_list_find_index(guest_indoors_list,_guest))	
 				
 				_guest.goal = _goalpost
 				ds_stack_push(_guest.goal_queue,_goalpost)

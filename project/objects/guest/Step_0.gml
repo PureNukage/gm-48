@@ -328,19 +328,13 @@ switch(states)
 									ds_list_delete(guestController.guest_active_list,ds_list_find_index(guestController.guest_active_list,id))
 									ds_list_add(guestController.guest_indoors_list,id)
 									
-									image_alpha = 0
-								
-									//var old_door_GID = DoorGID
+									image_alpha = 0								
 								
 									DoorGID = goal								
-									DoorID = goal.ID
-									
-									//ds_list_add(guestController.vacancy_list,old_door_GID)
-									//ds_list_add(guestController.vacancy_list,DoorGID)
+									DoorID = goal.ID								
 									
 									ds_stack_clear(goal_queue)
-									
-									//instance_destroy()												
+																					
 								
 								break;
 							#endregion
@@ -373,6 +367,9 @@ switch(states)
 			
 			x = DoorGID.x
 			
+			if ds_list_find_index(guestController.guest_active_list,id) != -1 {
+				ds_list_delete(guestController.guest_active_list,ds_list_find_index(guestController.guest_active_list,id))	
+			}
 			
 		
 		break;
