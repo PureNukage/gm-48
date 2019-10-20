@@ -71,27 +71,6 @@ else if time.stream > 1 {
 				ds_stack_push(_guest.goal_queue,new_door)
 				ds_list_delete(guestController.vacancy_list,_random)
 			}
-			
-		
-			//var _random_assigned_door = irandom_range(0,ds_list_size(vacancy_list)-1)
-			//var _random_goal_door = irandom_range(0,ds_list_size(vacancy_list)-1)
-			
-			//while _random_goal_door == _random_assigned_door _random_goal_door = irandom_range(0,ds_list_size(door_list)-1)
-		
-			//var which_door = vacancy_list[| _random_assigned_door]
-		
-			//var _guest = instance_create_layer(which_door.x,which_door.y,"Instances_controller",guest)
-		
-			//debug_log("which door GID: "+string(which_door))
-			//debug_log("door assigned floor: "+string(which_door.Floor))
-			//_guest.Floor = which_door.Floor
-			//_guest.DoorID = _random_assigned_door
-			//_guest.DoorGID = vacancy_list[| _random_assigned_door]
-		
-			//ds_stack_push(_guest.goal_queue,door_list[| _random_goal_door])
-			
-			//ds_list_delete(vacancy_list,_random_assigned_door)
-			//ds_list_delete(vacancy_list,ds_list_find_index(vacancy_list,door_list[| _random_goal_door]))
 		}
 		
 	#endregion
