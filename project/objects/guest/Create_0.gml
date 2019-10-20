@@ -4,6 +4,7 @@ Floor = 0
 DoorID = 0
 DoorGID = 0
 
+Direction = 0
 hspd = 0
 
 movespeed = 3

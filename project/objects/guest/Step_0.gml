@@ -66,15 +66,19 @@ switch(states)
 									ds_stack_push(goal_queue,closest_elevator)
 									goal = closest_elevator
 						
-						
-									var which_side_of_elevator = sign(closest_elevator.y-y)
-									if which_side_of_elevator = -1 which_side_of_elevator = 0
-						
-									debug_log("goal name: "+string(object_get_name(goal.object_index))+" goal GID: "+string(goal))
+									var which_side_of_elevator = 0
+									var which_side_of_elevator_raw = sign(closest_elevator.x - x)
+									if which_side_of_elevator_raw == -1 which_side_of_elevator = 1
+									else which_side_of_elevator = 0
 									
-									var _direction = sign(goalX - y)
-									goalX = goal.shaft[which_side_of_elevator]+(sign(_direction)*-31)
+									debug_log("moving towards goal! name: "+string(object_get_name(goal.object_index))+" , GID: "+string(goal))
+									debug_log("taking the "+string(which_side_of_elevator)+" elevator shaft")
+									
+									goalX = goal.shaft[which_side_of_elevator]
+									Direction = sign(goalX - x)
+									goalX += sign(Direction)*-31
 									debug_log("goalX "+string(goalX))									
+									debug_log("direction: "+string(Direction))
 						
 									states = states.walk
 						
@@ -107,10 +111,8 @@ switch(states)
 	#endregion
 	#region Walk
 		case states.walk:
-	
-			var _direction = sign(goalX - y)
 			
-			hspd += _direction*movespeed
+			hspd += Direction*movespeed
 			
 			hspd = clamp(hspd,-movespeed,movespeed)
 			
