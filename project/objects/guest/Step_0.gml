@@ -242,6 +242,9 @@ switch(states)
 											if other_elevator != 0 {
 												debug_log("Going to a different elevator on this floor")
 												
+												//	Remove ourselves from current elevator passenger_list
+												ds_list_delete(goal.passenger_list,ds_list_find_index(goal.passenger_list,id))
+												
 												ds_stack_push(goal_queue,other_elevator)
 												goal = other_elevator
 						
