@@ -3,8 +3,8 @@ switch (room) {
     case room1 :
         draw_set_halign(fa_center);
         draw_set_font(fnt_title);
-        draw_text_colour(room_width/2+4, 32+6, "the#tower", c_black, c_black, c_black, c_black, 1);
-        draw_text_colour(room_width/2, 32, "the#tower", c_white, c_white, c_white, c_white, 1);
+        draw_text_colour(room_width/2+4, 32+6, "the\ntower", c_black, c_black, c_black, c_black, 1);
+        draw_text_colour(room_width/2, 32, "the\ntower", c_white, c_white, c_white, c_white, 1);
         var start = keyboard_check_pressed(vk_space);
 
 if (gamepad_is_connected (0)) {
