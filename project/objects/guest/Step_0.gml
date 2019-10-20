@@ -213,6 +213,7 @@ switch(states)
 											var _goalpost = instance_create_layer(where_im_standing,y,"Instances_controller",goalpost)
 											_goalpost.goal_type = goal_type.elevator_board
 											_goalpost.elevator = goal
+											_goalpost.Floor = goal.Floor
 										
 											ds_list_add(goal.passenger_list,id)
 										

@@ -27,10 +27,33 @@ switch(states)
 			states = states.idle
 			player.states = states.idle
 			Floor = Floor - floor_direction
+			
+			var new_passenger_list = ds_list_create()
+			ds_list_copy(new_passenger_list,passenger_list)
+			
 			for(var i=0;i<ds_list_size(passenger_list);i++) {
-				passenger_list[| i].Floor = Floor	
+				var _passenger = passenger_list[| i]
+				_passenger.Floor = Floor	
+							
+				if (_passenger.object_index == guest) {
+					
+					//	Is this your floor?
+					if _passenger.Floor == _passenger.goal.Floor {
+						ds_list_delete(new_passenger_list,ds_list_find_index(new_passenger_list,_passenger.id))
+					} else {
+						
+					}
+					
+				} else {
+					//	Passenger is the player
+					ds_list_delete(new_passenger_list,ds_list_find_index(new_passenger_list,_passenger.id))
+				}						
+				
 			}
+			
 			ds_list_clear(passenger_list)
+			ds_list_copy(passenger_list,new_passenger_list)
+
 			current_floor = current_floor - floor_direction
 			floor_direction = 0
 			
