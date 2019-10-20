@@ -9,12 +9,16 @@ switch(states)
 	case states.elevator:
 	
 		// If we're not at the next floor yet
-		if y != floors_y[current_floor-floor_direction] {
+		if y != floors_y[current_floor-floor_direction] {	
+			
+			vspd += floor_direction
+			
+			vspd = clamp(vspd,-movespeed,movespeed)
 			
 			//	Move elevator and player in elevators direction
-			y += floor_direction
+			y += vspd
 			for(var i=0;i<ds_list_size(passenger_list);i++) {
-				passenger_list[| i].y += floor_direction	
+				passenger_list[| i].y += vspd	
 			}
 			
 		} else {

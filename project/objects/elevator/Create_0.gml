@@ -8,6 +8,9 @@ shaft = []
 shaft[0] = x-(sprite_width/2)
 shaft[1] = x+(sprite_width/2)
 
+vspd = 0
+movespeed = 3
+
 passenger_list = ds_list_create()
 
 //	Loop for filling in array y-positions of my floors
