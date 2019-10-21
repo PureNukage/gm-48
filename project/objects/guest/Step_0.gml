@@ -79,6 +79,7 @@ switch(states)
 										goalX = goal.shaft[which_side_of_elevator]
 										Direction = sign(goalX - x)
 										goalX += sign(Direction)*-31
+										debug_log("my x: " +string(x))
 										debug_log("goalX "+string(goalX))									
 										debug_log("direction: "+string(Direction))
 						
@@ -188,10 +189,13 @@ switch(states)
 			
 			hspd = clamp(hspd,-movespeed,movespeed)
 			
+			//	Double check direction
+			Direction = sign(goalX - x)		
+			
 			//	Apply horizontal thrust while collision checking each pixel movement
 			repeat(abs(hspd)) {
 				var next_pixel = x + sign(hspd)
-				if next_pixel != goalX {
+				if next_pixel != goalX {			
 					x += sign(hspd)	
 				} else { 
 					#region	Arrived at goal
@@ -278,6 +282,7 @@ switch(states)
 												goalX = goal.shaft[which_side_of_elevator]
 												Direction = sign(goalX - x)
 												goalX += sign(Direction)*-31
+												debug_log("my x: "+string(x))
 												debug_log("goalX "+string(goalX))									
 												debug_log("direction: "+string(Direction))
 						
