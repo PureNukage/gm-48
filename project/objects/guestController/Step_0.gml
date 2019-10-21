@@ -144,6 +144,9 @@ else if time.stream > 1 {
 			var _guest = spawn_guest()
 			if _guest != -1 {
 				
+				//	Spawn pop message
+				spawn_popup("A new guest has arrived to the hotel!",c_green,3)
+				
 				//	Let's send him somewhere random either above him or under him or on his floor
 
 				var above_under_same = irandom_range(-1,1)

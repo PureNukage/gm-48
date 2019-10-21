@@ -478,6 +478,8 @@ switch(states)
 
 			debug_log("I am pissed off and outta here")
 			
+			spawn_popup("A guest has left the hotel!",c_red,3)
+			
 			//	Was I in an elevator? If so remove myself and recalc elevators light switches
 			if Elevator != 0 {
 				debug_log("I was in an elevator!")
@@ -505,7 +507,6 @@ switch(states)
 				Elevator = 0
 				
 			}
-			
 			
 		
 			states = states.pissed

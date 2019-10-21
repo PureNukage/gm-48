@@ -119,14 +119,6 @@
             }
         },
         {
-            "Key": "25663ed3-92d6-4f98-b1fe-739593b2b97c",
-            "Value": {
-                "id": "2f0e2bbc-66b5-49f6-a24a-f573512e7e51",
-                "resourcePath": "objects\\menu\\menu.yy",
-                "resourceType": "GMObject"
-            }
-        },
-        {
             "Key": "2887656a-3081-4981-b735-42b0781fdf9b",
             "Value": {
                 "id": "6b70650c-f6bd-4fb5-8590-0a899b9744ca",
@@ -151,6 +143,14 @@
             }
         },
         {
+            "Key": "3b0712d9-7ebf-4e27-ae8c-697b348bbb0c",
+            "Value": {
+                "id": "a4d9107f-c693-49a5-b022-64b29738c919",
+                "resourcePath": "objects\\popup\\popup.yy",
+                "resourceType": "GMObject"
+            }
+        },
+        {
             "Key": "42cce9c5-8287-44d3-a454-b1cd48406c61",
             "Value": {
                 "id": "2cafdfe3-e0d0-43a2-bf92-3a3449719210",
@@ -172,6 +172,14 @@
                 "id": "684688bd-2911-4629-b40b-42310a174701",
                 "resourcePath": "rooms\\room1\\room1.yy",
                 "resourceType": "GMRoom"
+            }
+        },
+        {
+            "Key": "4ef4e2c4-66de-4940-b329-ab4a211f0c3b",
+            "Value": {
+                "id": "ddc6e73b-5eb7-4fd0-b4c8-fcc22f908908",
+                "resourcePath": "objects\\popupController\\popupController.yy",
+                "resourceType": "GMObject"
             }
         },
         {
@@ -471,6 +479,14 @@
             }
         },
         {
+            "Key": "d29bbde4-45dd-4d79-ab50-c5f9606324c8",
+            "Value": {
+                "id": "3a805eaf-0f93-4986-9ec2-fe4104af66d8",
+                "resourcePath": "scripts\\spawn_popup\\spawn_popup.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "d4d2f5c8-d3f8-4c30-a9ae-00fc33495560",
             "Value": {
                 "id": "3a8db075-3d61-4b19-a5f8-c7f1c0199c65",
@@ -563,7 +579,8 @@
         "538eb2b5-c838-4d77-a093-285cbc17d31d",
         "6ba3ee46-1d48-47a8-996a-b680c71baadf",
         "90312957-016e-4970-99f9-7a8c8f61eaff",
-        "68d73fb7-bde3-4c64-a4e5-cdaf8f6c0b45"
+        "68d73fb7-bde3-4c64-a4e5-cdaf8f6c0b45",
+        "d29bbde4-45dd-4d79-ab50-c5f9606324c8"
     ],
     "tutorial": ""
 }
