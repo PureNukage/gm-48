@@ -96,14 +96,24 @@ switch(states)
 									
 										//	Find nearest elevator shaft 
 										for(var elev=0;elev<ds_list_size(guestController.elevator_list);elev++) {
-											//	Does this elevator come to my floor?
+											//	Does this elevator come to my floor and go to the floor I want?
 											var comes_to_my_floor = 0
+											var goes_to_desired_floor = 0
 											for(var elv=0;elv<guestController.elevator_list[| elev].floors;elv++) {
 												if guestController.elevator_list[| elev].floors_y[elv]-64 == y {
-													comes_to_my_floor++		
+													comes_to_my_floor++
+													//	Does it also go to the floor I want?
+													var _elevator_ = guestController.elevator_list[| elev]
+													var _desired_elevator_y = guestController.elevator_list[| Floor]
+													for(var des=0;des<_elevator_.floors;des++) {
+														if _elevator_.floors_y[des]-64 == _desired_elevator_y {
+															goes_to_desired_floor++	
+														}
+													}
+													
 												}
 											}
-											if comes_to_my_floor > 0 {
+											if comes_to_my_floor > 0 and goes_to_desired_floor > 0 {
 												var distance = abs(guestController.elevator_list[| elev].x - x)
 												ds_list_add(all_elevators_distance,distance)
 											}
@@ -379,7 +389,7 @@ switch(states)
 		case states.elevator:
 		
 			//	If my elevator is moving
-			if Elevator.vspd > 0.2 {
+			if abs(Elevator.vspd) > 0.2 {
 				
 				//	If I'm waiting, pause my wait_time
 				if wait_time > 0 and time.seconds_switch wait_time++	
