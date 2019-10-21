@@ -121,6 +121,7 @@ switch(states)
 										}
 									
 										if elev_id != 0 {
+											
 											ds_stack_push(goal_queue,elev_id)
 											goal = elev_id
 						
@@ -211,6 +212,7 @@ switch(states)
 								case elevator_2floors_starts1:
 									//	Check if elevators here, if so get on it
 									debug_log("Checking for elevator")
+									
 									#region Elevators here, all aboard
 										if (goal.y-sprite_height == y) {
 											var where_im_standing = irandom_range(goal.x-(sprite_width/2)+32,goal.x+(sprite_width/2)-32)
@@ -250,23 +252,10 @@ switch(states)
 												debug_log("Going to a different elevator on this floor")
 												
 												//	Remove ourselves from current elevator passenger_list
-												ds_list_delete(goal.passenger_list,ds_list_find_index(goal.passenger_list,id))
+												ds_list_delete(goal.passenger_list,ds_list_find_index(goal.passenger_list,id))	
 												
-												//	Calc arrow colors 
-												up_arrow_color = 0 
-												down_arrow_color = 0
-												if ds_list_size(goal.passenger_list) > 0 {
-													for(var i=0;i<ds_list_size(goal.passenger_list);i++) {
-														var _passenger = goal.passenger_list[| i]
-														if _passenger.object_index == guest {
-															with _passenger {
-																if vDirection > 0 other.down_arrow_color = 1
-																if vDirection < 0 other.up_arrow_color = 1
-															}
-														}
-						
-													}
-												}
+												debug_log("Deleting "+string(ds_stack_top(goal_queue))+" from the goal queue")
+												ds_stack_pop(goal_queue)
 												
 												ds_stack_push(goal_queue,other_elevator)
 												goal = other_elevator
