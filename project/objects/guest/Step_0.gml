@@ -179,8 +179,8 @@ switch(states)
 		
 			#region If boarding elevator (LAZY FIX)
 				if goal.object_index == goalpost and goal.goal_type == goal_type.elevator_board {
-					if ds_list_find_index(goal.elevator.passenger_list,id) == -1 {
-						ds_list_add(goal.elevator.passenger_list,id)
+					if ds_list_find_index(goal.Elevator.passenger_list,id) == -1 {
+						ds_list_add(goal.Elevator.passenger_list,id)
 					}
 				}
 				
@@ -218,7 +218,7 @@ switch(states)
 												var where_im_standing = irandom_range(goal.x-(sprite_width/2)+32,goal.x+(sprite_width/2)-32)
 												var _goalpost = instance_create_layer(where_im_standing,y,"Instances_controller",goalpost)
 												_goalpost.goal_type = goal_type.elevator_board
-												_goalpost.elevator = goal
+												_goalpost.Elevator = goal
 												_goalpost.Floor = goal.Floor
 										
 												ds_list_add(goal.passenger_list,id)											
@@ -308,9 +308,11 @@ switch(states)
 											
 												states = states.elevator
 												
+												Elevator = goal.Elevator
+												
 												debug_log("vDirection: "+string(vDirection))
-												if vDirection > 0 goal.elevator.down_arrow_color = 1
-												if vDirection < 0 goal.elevator.up_arrow_color = 1
+												if vDirection > 0 goal.Elevator.down_arrow_color = 1
+												if vDirection < 0 goal.Elevator.up_arrow_color = 1
 											
 												instance_destroy(goal)
 												ds_stack_pop(goal_queue)
@@ -374,17 +376,23 @@ switch(states)
 	#endregion
 	
 	#region Elevator
-		case states.elevator:		
+		case states.elevator:
+		
+			//	If my elevator is currently moving
+			if Elevator.vspd != 0 {
+				
+				//	If I'm waiting, pause my wait_time
+				if wait_time > 0 and time.seconds_switch wait_time++	
+
+					
+			}
+		
 	
 			//	If I have arrived
 			if Floor == goal.Floor {
 				debug_log("I have arrived at the floor of my goal: "+string(object_get_name(ds_stack_top(goal_queue).object_index)))
 				
-				if pissed == 1 {
-					
-				} else {
-					wait_time = 0
-				}
+				wait_time = 0
 				
 				vDirection = 0
 				states = states.walk
@@ -441,44 +449,46 @@ switch(states)
 	#endregion
 }
 
-if states != states.pissed {
-	//	I waited too long and am now pissed off!
-	if time.seconds != 0 and time.seconds >= wait_time and wait_time != 0 {
+#region Get Pissed Off 
+	if states != states.pissed {
+		//	I waited too long and am now pissed off!
+		if time.seconds != 0 and time.seconds >= wait_time and wait_time != 0 {
 	
-		if states != states.elevator {
-			debug_log("I am pissed off and outta here")
-			states = states.pissed
+			if states != states.elevator {
+				debug_log("I am pissed off and outta here")
+				states = states.pissed
 		
-			var random_direction = choose(-1,1)
+				var random_direction = choose(-1,1)
 		
-			Direction = random_direction	
+				Direction = random_direction	
 			
-			//	Delete ourselves data wise
-			ds_list_delete(guestController.guest_list,ds_list_find_index(guestController.guest_list,id))
+				//	Delete ourselves data wise
+				ds_list_delete(guestController.guest_list,ds_list_find_index(guestController.guest_list,id))
 	
-			//	Free up our door
-			ds_list_add(guestController.vacancy_list,DoorGID)
-			DoorGID.vacant = true
+				//	Free up our door
+				ds_list_add(guestController.vacancy_list,DoorGID)
+				DoorGID.vacant = true
 			
-			guestController.guest_time_last_one_left = time.seconds
+				guestController.guest_time_last_one_left = time.seconds
 			
-			//	Destroy all goalposts in goal stack
-			var goal_list = ds_list_create()
-			var stack_size = ds_stack_size(goal_queue)
-			debug_log("Destroying "+string(stack_size)+" goals")
-			while ds_stack_size(goal_queue) > 0 {
-				ds_list_add(goal_list,ds_stack_pop(goal_queue))
-			}
-			for(var i=0;i<ds_list_size(goal_list);i++) {
-				var _goal = goal_list[| i]
-				if _goal.object_index == goalpost {
-					debug_log("Destroying my goal of: "+string(object_get_name(_goal.object_index)))
-					instance_destroy(_goal)	
-				}	
-			}
+				//	Destroy all goalposts in goal stack
+				var goal_list = ds_list_create()
+				var stack_size = ds_stack_size(goal_queue)
+				debug_log("Destroying "+string(stack_size)+" goals")
+				while ds_stack_size(goal_queue) > 0 {
+					ds_list_add(goal_list,ds_stack_pop(goal_queue))
+				}
+				for(var i=0;i<ds_list_size(goal_list);i++) {
+					var _goal = goal_list[| i]
+					if _goal.object_index == goalpost {
+						debug_log("Destroying my goal of: "+string(object_get_name(_goal.object_index)))
+						instance_destroy(_goal)	
+					}	
+				}
 			
 		
+			}
+	
 		}
-	
 	}
-}
+#endregion	
