@@ -461,6 +461,22 @@ if states != states.pissed {
 			DoorGID.vacant = true
 			
 			guestController.guest_time_last_one_left = time.seconds
+			
+			//	Destroy all goalposts in goal stack
+			var goal_list = ds_list_create()
+			var stack_size = ds_stack_size(goal_queue)
+			debug_log("Destroying "+string(stack_size)+" goals")
+			while ds_stack_size(goal_queue) > 0 {
+				ds_list_add(goal_list,ds_stack_pop(goal_queue))
+			}
+			for(var i=0;i<ds_list_size(goal_list);i++) {
+				var _goal = goal_list[| i]
+				if _goal.object_index == goalpost {
+					debug_log("Destroying my goal of: "+string(object_get_name(_goal.object_index)))
+					instance_destroy(_goal)	
+				}	
+			}
+			
 		
 		}
 	

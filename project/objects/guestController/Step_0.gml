@@ -54,7 +54,7 @@
 
 else if time.stream > 1 {
 
-	#region Spawn guest(s)
+	#region Spawn initial guest(s)
 	
 		if instance_number(guest) < guests_starting {
 			
@@ -135,36 +135,38 @@ else if time.stream > 1 {
 	
 	#endregion
 	
-	var _seconds = 5
-	if (time.seconds - guest_time_last_one_left) > _seconds and time.seconds-guest_time_last_one_spawned > _seconds {
-		guest_time_last_one_spawned = time.seconds
+	#region Spawn a Guest after good behavior
+		var _seconds = 5
+		if (time.seconds - guest_time_last_one_left) > _seconds and time.seconds-guest_time_last_one_spawned > _seconds {
+			guest_time_last_one_spawned = time.seconds
 		
-		//	The player hasn't lost a guest in x seconds, lets reward him with another guest 		
-		var _guest = spawn_guest()
-		if _guest != -1 {
+			//	The player hasn't lost a guest in x seconds, lets reward him with another guest 		
+			var _guest = spawn_guest()
+			if _guest != -1 {
 				
-			//	Let's send him somewhere random either above him or under him or on his floor
+				//	Let's send him somewhere random either above him or under him or on his floor
 
-			var above_under_same = irandom_range(-1,1)
-			var hypothetical_new_floor = _guest.Floor + above_under_same
-			if hypothetical_new_floor > 0 and hypothetical_new_floor < ds_list_size(floors_list)-1 {
-				var _floor = hypothetical_new_floor
-			} else {
-				var _floor = _guest.Floor
-			}
+				var above_under_same = irandom_range(-1,1)
+				var hypothetical_new_floor = _guest.Floor + above_under_same
+				if hypothetical_new_floor > 0 and hypothetical_new_floor < ds_list_size(floors_list)-1 {
+					var _floor = hypothetical_new_floor
+				} else {
+					var _floor = _guest.Floor
+				}
 				
-			var _x = irandom_range(_guest.x-164,_guest.x+164)
-			while (_x < 0 or _x > room_width) _x = irandom_range(_guest.x-164,_guest.x+164)
+				var _x = irandom_range(_guest.x-164,_guest.x+164)
+				while (_x < 0 or _x > room_width) _x = irandom_range(_guest.x-164,_guest.x+164)
 				
-			var _goalpost = instance_create_layer(_x,floors_list[| _floor],"Instances_controller",goalpost)
+				var _goalpost = instance_create_layer(_x,floors_list[| _floor],"Instances_controller",goalpost)
 				
-			_goalpost.Floor = _floor
-			_goalpost.goal_type = goal_type.do_something
+				_goalpost.Floor = _floor
+				_goalpost.goal_type = goal_type.do_something
 				
-			_guest.goal = _goalpost
-			ds_stack_push(_guest.goal_queue,_goalpost)
+				_guest.goal = _goalpost
+				ds_stack_push(_guest.goal_queue,_goalpost)
 				
-		}	
-	}
+			}	
+		}
 	
+	#endregion
 }
