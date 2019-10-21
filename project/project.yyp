@@ -479,6 +479,14 @@
             }
         },
         {
+            "Key": "e93af77d-bc1a-4393-9e1e-84ac461687e7",
+            "Value": {
+                "id": "f9992d51-dffc-4934-b863-54289a5913cd",
+                "resourcePath": "sprites\\s_walkcycle\\s_walkcycle.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "ead77c4d-5b43-484b-841a-6933a28baf5b",
             "Value": {
                 "id": "b131e1e2-a64f-479e-af49-be02ad26ae1f",

@@ -11,15 +11,26 @@ switch(states)
 
 		//	Clamp for max movespeed
 		hspd = clamp(hspd,-movespeed,movespeed)
+		
+		if playerInput.key_right or playerInput.key_left {
+			image_speed = 1	
+			if hspd > 0 {
+				image_xscale = 1	
+			} else {
+				image_xscale = -1	
+			}
+		} else {
+			image_speed = 0	
+		}
 
 		//	Apply horizontal thrust while collision checking each pixel movement
 		repeat(abs(hspd)) {
-			if !place_meeting(x+sign(hspd),y+sign(vspd),block) {
+			if !place_meeting(x+sign(hspd),y,block) {
 				x += sign(hspd)	
 			} else { 
 				hspd = 0
 			}	
-		}
+		}		
 		
 		#region	Use Elevator
 		
@@ -47,6 +58,7 @@ switch(states)
 	#region Elevator
 	case states.elevator:
 		
+		if image_speed > 0 image_speed = 0
 		
 	
 	break;

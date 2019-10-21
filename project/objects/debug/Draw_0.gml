@@ -7,6 +7,7 @@ switch(mode)
 		draw_set_color(c_black)
 
 		with player {
+			draw_text(x-64,y-155,"speed: "+string(hspd))
 			draw_text(x-64,y-135,"hp :"+string(hp))
 			draw_text(x-64,y-120,"y: "+string(y))
 			draw_text(x-64,y-105,"Floor: "+string(Floor))	
@@ -32,6 +33,7 @@ switch(mode)
 			draw_text(x-64,y-110,"goalX: "+string(goalX))
 			draw_text(x-64,y-125,"x: "+string(x))
 			draw_text(x-64,y-140,"GID: "+string(id))
+			draw_text(x-64,y-155,"speed: "+string(hspd))
 		}	
 	break
 	case 2:
