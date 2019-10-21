@@ -6,7 +6,9 @@ switch(states)
 		#region	I got something to do!	
 			if ds_stack_size(goal_queue) > 0 {
 		
-				debug_log("I have " +string(ds_stack_size(goal_queue)) + " goal to do!")
+				debug_log("I have " +string(ds_stack_size(goal_queue)) + " goal(s) to do!")
+				debug_log("My goal is "+string(object_get_name(ds_stack_top(goal_queue).object_index)))
+				debug_log("I am on floor "+string(Floor))
 		
 				goal = ds_stack_top(goal_queue)
 		
@@ -18,7 +20,9 @@ switch(states)
 					case -1:	//	My goal is above me
 					case 1:		//	My goal is under me
 				
-					debug_log("My goal is above or under me!")
+					if vDirection == -1 var _direction = "above"
+					if vDirection == 1 var _direction = "under"
+					debug_log("My goal is "+string(_direction)+" me!")
 					#region Elevator check
 				
 						#region	Lets check if any elevators are on this floor
@@ -28,8 +32,21 @@ switch(states)
 						
 								//	This elevators on the same floor as us!
 								if _elevator.Floor == Floor {	
-									show_debug_message("["+string(time.stream)+"] Elevator "+string(_elevator)+" is on the same floor as me")								
-									ds_list_add(elevators_on_this_floor,_elevator)
+									debug_log("Elevator "+string(_elevator)+" is on the same floor as me")
+									
+									//	Make sure this elevator goes to our desired floor							
+									var _desired_floor = Floor
+									var desired_floor = _desired_floor - vDirection
+									debug_log("My desired floor is "+string(desired_floor))
+									
+									var desired_floor_y = guestController.floors_list[| goal.Floor]
+									
+									for(var des=0;des<_elevator.floors;des++) {
+										if _elevator.floors_y[des]-64 == desired_floor_y {							
+											ds_list_add(elevators_on_this_floor,_elevator)
+											debug_log("Elevator "+string(_elevator)+" goes to my desired floor")
+										}
+									}
 								}
 							}
 							
@@ -44,8 +61,8 @@ switch(states)
 								
 									#region	Sort elevators into closest -> furthest
 										var distance_list = ds_list_create()						
-										for(var elv=0;elv<how_many;elv++) {
-							
+										for(var elv=0;elv<how_many;elv++) {							
+											
 											//	Distance between guest and elevator
 											var distance = abs(elevators_on_this_floor[| elv].x - x)
 											debug_log("Elevator "+string(elevators_on_this_floor[| elv])+" is "+string(distance)+" away from me")
@@ -104,7 +121,7 @@ switch(states)
 													comes_to_my_floor++
 													//	Does it also go to the floor I want?
 													var _elevator_ = guestController.elevator_list[| elev]
-													var _desired_elevator_y = guestController.elevator_list[| Floor]
+													var _desired_elevator_y = guestController.elevator_list[| goal.Floor]
 													for(var des=0;des<_elevator_.floors;des++) {
 														if _elevator_.floors_y[des]-64 == _desired_elevator_y {
 															goes_to_desired_floor++	
