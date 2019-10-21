@@ -65,5 +65,10 @@ switch(states)
 	#endregion
 }
 
-//hp = ds_list_size(guestController.door_list)-(ds_list_size(guestController.door_list) - ds_list_size(guestController.guest_list))
-hp = ds_list_size(guestController.door_list)-(ds_list_size(guestController.door_list) - ds_list_size(guestController.guest_list))
+var guest_count = ds_list_size(guestController.guest_list)
+
+//	Game over!
+if guest_count == 0 and time.stream > 10 {
+	show_message("GAME OVER    All the guests left your hotel!")
+	game_restart()
+}

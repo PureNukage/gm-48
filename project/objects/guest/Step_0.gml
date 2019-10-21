@@ -427,12 +427,40 @@ switch(states)
 			
 		break
 	#endregion
+	
+	#region Pissed
+		case states.pissed:
+		
+			//	I'm outta here
+			hspd += Direction*movespeed
+			
+			hspd = clamp(hspd,-movespeed,movespeed)
+		
+			x += hspd
+		break
+	#endregion
 }
 
-//	I waited too long and am now pissed off!
-if time.seconds != 0 and time.seconds == wait_time {
+if states != states.pissed {
+	//	I waited too long and am now pissed off!
+	if time.seconds != 0 and time.seconds >= wait_time and wait_time != 0 {
 	
-	debug_log("I am pissed off!")
-	pissed = 1
+		if states != states.elevator {
+			debug_log("I am pissed off and outta here")
+			states = states.pissed
+		
+			var random_direction = choose(-1,1)
+		
+			Direction = random_direction	
+			
+			//	Delete ourselves data wise
+			ds_list_delete(guestController.guest_list,ds_list_find_index(guestController.guest_list,id))
 	
+			//	Free up our door
+			ds_list_add(guestController.vacancy_list,DoorGID)
+			DoorGID.vacant = true
+		
+		}
+	
+	}
 }

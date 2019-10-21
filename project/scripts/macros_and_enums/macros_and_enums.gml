@@ -4,11 +4,12 @@ enum states {
 	elevator,
 	indoors,
 	walk,
+	pissed,
 
 }
 
 enum goal_type {
 	elevator_board,
-	do_something
+	do_something,
 	
 }
