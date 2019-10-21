@@ -28,12 +28,15 @@ switch(mode)
 		}
 
 		with guest {
-			draw_text(x-64,y-80,"floor: "+string(Floor))
-			draw_text(x-64,y-95,"door: "+string(DoorID))
-			draw_text(x-64,y-110,"goalX: "+string(goalX))
-			draw_text(x-64,y-125,"x: "+string(x))
-			draw_text(x-64,y-140,"GID: "+string(id))
-			draw_text(x-64,y-155,"speed: "+string(hspd))
+			var _y = 80
+			draw_text(x-64,y-_y,"floor: "+string(Floor))				_y += 15
+			draw_text(x-64,y-_y,"door: "+string(DoorID))				_y += 15
+			draw_text(x-64,y-_y,"goalX: "+string(goalX))				_y += 15
+			draw_text(x-64,y-_y,"x: "+string(x))						_y += 15
+			draw_text(x-64,y-_y,"GID: "+string(id))						_y += 15
+			draw_text(x-64,y-_y,"speed: "+string(hspd))					_y += 15
+			draw_text(x-64,y-_y,"wait time: "+string(wait_time))		_y += 15
+			draw_text(x-64,y-_y,"pissed: "+string(pissed))
 		}	
 	break
 	case 2:

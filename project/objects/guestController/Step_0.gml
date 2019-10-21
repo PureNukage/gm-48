@@ -103,8 +103,10 @@ else if time.stream > 1 {
 				//	Let's send him somewhere random either above him or under him or on his floor
 
 				var above_under_same = irandom_range(-1,1)
-				var hypothetical_new_floor = _guest.Floor + above_under_same
-				if hypothetical_new_floor > 0 and hypothetical_new_floor < ds_list_size(floors_list)-1 {
+				var hypothetical_new_floor = _guest.Floor - above_under_same
+				if hypothetical_new_floor == 1 {
+					var _floor = 1 
+				} else if hypothetical_new_floor >= 0 and hypothetical_new_floor < ds_list_size(floors_list)-1 {
 					var _floor = hypothetical_new_floor
 				} else {
 					var _floor = _guest.Floor

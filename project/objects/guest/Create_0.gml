@@ -10,6 +10,11 @@ hspd = 0
 
 movespeed = 3
 
+y_previous = 0
+
+wait_time = 0
+pissed = 0
+
 idle_time = 0
 
 goalX = 0

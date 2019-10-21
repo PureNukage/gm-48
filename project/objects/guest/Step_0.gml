@@ -210,79 +210,88 @@ switch(states)
 								case elevator:
 								case elevator_child:
 								case elevator_2floors_starts1:
-									//	Check if elevators here, if so get on it
+									#region	Check if elevators here
 									debug_log("Checking for elevator")
 									
-									#region Elevators here, all aboard
-										if (goal.y-sprite_height == y) {
-											var where_im_standing = irandom_range(goal.x-(sprite_width/2)+32,goal.x+(sprite_width/2)-32)
-											var _goalpost = instance_create_layer(where_im_standing,y,"Instances_controller",goalpost)
-											_goalpost.goal_type = goal_type.elevator_board
-											_goalpost.elevator = goal
-											_goalpost.Floor = goal.Floor
+										#region Elevators here, all aboard
+											if (goal.y-sprite_height == y) {
+												var where_im_standing = irandom_range(goal.x-(sprite_width/2)+32,goal.x+(sprite_width/2)-32)
+												var _goalpost = instance_create_layer(where_im_standing,y,"Instances_controller",goalpost)
+												_goalpost.goal_type = goal_type.elevator_board
+												_goalpost.elevator = goal
+												_goalpost.Floor = goal.Floor
 										
-											ds_list_add(goal.passenger_list,id)											
+												ds_list_add(goal.passenger_list,id)											
 										
-											ds_stack_pop(goal_queue)
-										
-											ds_stack_push(goal_queue,_goalpost)
-											goal = ds_stack_top(goal_queue)
-											goalX = goal.x
-											
-											Direction = sign(goalX - x)
-										
-											debug_log("My new goal is "+string(object_get_name(ds_stack_top(goal_queue).object_index)))
-										
-											debug_log("I am boarding an elevator")
-										} 
-									#endregion
-									
-									#region	Elevators not here yet 
-										else {
-											debug_log("ERROR No elevator! ERROR")	
-										
-											//	Are there any other elevators on this floor?
-											var other_elevator = 0
-											with elevator {
-												if other.y == y-64 {
-													other_elevator = id	
-												}
-											}
-											if other_elevator != 0 {
-												debug_log("Going to a different elevator on this floor")
-												
-												//	Remove ourselves from current elevator passenger_list
-												ds_list_delete(goal.passenger_list,ds_list_find_index(goal.passenger_list,id))	
-												
-												debug_log("Deleting "+string(ds_stack_top(goal_queue))+" from the goal queue")
 												ds_stack_pop(goal_queue)
-												
-												ds_stack_push(goal_queue,other_elevator)
-												goal = other_elevator
-						
-												var which_side_of_elevator = 0
-												var which_side_of_elevator_raw = sign(other_elevator.x - x)
-												if which_side_of_elevator_raw == -1 which_side_of_elevator = 1
-												else which_side_of_elevator = 0
-									
-												debug_log("moving towards goal! name: "+string(object_get_name(goal.object_index))+" , GID: "+string(goal))
-												debug_log("taking the "+string(which_side_of_elevator)+" elevator shaft")
-									
-												goalX = goal.shaft[which_side_of_elevator]
-												Direction = sign(goalX - x)
-												goalX += sign(Direction)*-31
-												debug_log("my x: "+string(x))
-												debug_log("goalX "+string(goalX))									
-												debug_log("direction: "+string(Direction))
-						
-												states = states.walk
-											} else {
-												//debug_log("I should be going to a shaft!")
-											}
 										
-										}
-									#endregion
+												ds_stack_push(goal_queue,_goalpost)
+												goal = ds_stack_top(goal_queue)
+												goalX = goal.x
+											
+												Direction = sign(goalX - x)
+												
+												guest_wait()
+										
+												debug_log("My new goal is "+string(object_get_name(ds_stack_top(goal_queue).object_index)))
+										
+												debug_log("I am boarding an elevator")
+											} 
+										#endregion
 									
+										#region	Elevators not here yet 
+											else {
+										
+												//	Are there any other elevators on this floor?
+												var other_elevator = 0
+												with elevator {
+													if other.y == y-64 {
+														other_elevator = id	
+													}
+												}
+												if other_elevator != 0 {
+													debug_log("Going to a different elevator on this floor")
+												
+													//	Remove ourselves from current elevator passenger_list
+													ds_list_delete(goal.passenger_list,ds_list_find_index(goal.passenger_list,id))	
+												
+													debug_log("Deleting "+string(ds_stack_top(goal_queue))+" from the goal queue")
+													ds_stack_pop(goal_queue)
+												
+													ds_stack_push(goal_queue,other_elevator)
+													goal = other_elevator
+						
+													var which_side_of_elevator = 0
+													var which_side_of_elevator_raw = sign(other_elevator.x - x)
+													if which_side_of_elevator_raw == -1 which_side_of_elevator = 1
+													else which_side_of_elevator = 0
+									
+													debug_log("moving towards goal! name: "+string(object_get_name(goal.object_index))+" , GID: "+string(goal))
+													debug_log("taking the "+string(which_side_of_elevator)+" elevator shaft")
+									
+													goalX = goal.shaft[which_side_of_elevator]
+													Direction = sign(goalX - x)
+													goalX += sign(Direction)*-31
+													debug_log("my x: "+string(x))
+													debug_log("goalX "+string(goalX))									
+													debug_log("direction: "+string(Direction))
+						
+													states = states.walk
+												} else {
+													//debug_log("I should be going to a shaft!")
+													debug_log("ERROR No elevator! ERROR")	
+													
+													//	I should be waiting if I'm not already
+													if wait_time <= time.seconds and wait_time == 0 {
+														guest_wait()	
+													} 
+													
+												}
+										
+											}
+										#endregion
+										
+									#endregion
 								
 								break;
 							#endregion
@@ -365,11 +374,17 @@ switch(states)
 	#endregion
 	
 	#region Elevator
-		case states.elevator:
+		case states.elevator:		
 	
 			//	If I have arrived
 			if Floor == goal.Floor {
 				debug_log("I have arrived at the floor of my goal: "+string(object_get_name(ds_stack_top(goal_queue).object_index)))
+				
+				if pissed == 1 {
+					
+				} else {
+					wait_time = 0
+				}
 				
 				vDirection = 0
 				states = states.walk
@@ -412,4 +427,12 @@ switch(states)
 			
 		break
 	#endregion
+}
+
+//	I waited too long and am now pissed off!
+if time.seconds != 0 and time.seconds == wait_time {
+	
+	debug_log("I am pissed off!")
+	pissed = 1
+	
 }
