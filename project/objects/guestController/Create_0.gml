@@ -8,6 +8,6 @@ elevator_list = ds_list_create()
 guest_time_last_one_left = 0
 guest_time_last_one_spawned = 0
 
-guests_starting = 6		//	Starting number of guests in the level (probably shouldn't exceed #doors in level)
+guests_starting = 1			//	Starting number of guests in the level (probably shouldn't exceed #doors in level)
 
 guests_active_clamp = 6		//	Maximum number of guests out of their doors at once (larger == harder, presumably)

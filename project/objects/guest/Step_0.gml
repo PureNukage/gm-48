@@ -378,13 +378,23 @@ switch(states)
 	#region Elevator
 		case states.elevator:
 		
-			//	If my elevator is currently moving
-			if Elevator.vspd != 0 {
+			//	If my elevator is moving
+			if Elevator.vspd > 0.2 {
 				
 				//	If I'm waiting, pause my wait_time
 				if wait_time > 0 and time.seconds_switch wait_time++	
 
 					
+			} 
+			
+			//	If my elevator is not moving 
+			else {
+				
+				//	Should I be pissed? (LAZY FIX)
+				if time.seconds != 0 and time.seconds >= wait_time and wait_time != 0 {
+					//Elevator = 0
+					states = states.walk
+				}
 			}
 		
 	
@@ -393,6 +403,8 @@ switch(states)
 				debug_log("I have arrived at the floor of my goal: "+string(object_get_name(ds_stack_top(goal_queue).object_index)))
 				
 				wait_time = 0
+				
+				Elevator = 0
 				
 				vDirection = 0
 				states = states.walk
@@ -452,39 +464,69 @@ switch(states)
 #region Get Pissed Off 
 	if states != states.pissed {
 		//	I waited too long and am now pissed off!
-		if time.seconds != 0 and time.seconds >= wait_time and wait_time != 0 {
-	
-			if states != states.elevator {
-				debug_log("I am pissed off and outta here")
-				states = states.pissed
-		
-				var random_direction = choose(-1,1)
-		
-				Direction = random_direction	
+		if time.seconds != 0 and time.seconds >= wait_time and wait_time != 0 {	
+
+			debug_log("I am pissed off and outta here")
 			
-				//	Delete ourselves data wise
-				ds_list_delete(guestController.guest_list,ds_list_find_index(guestController.guest_list,id))
-	
-				//	Free up our door
-				ds_list_add(guestController.vacancy_list,DoorGID)
-				DoorGID.vacant = true
-			
-				guestController.guest_time_last_one_left = time.seconds
-			
-				//	Destroy all goalposts in goal stack
-				var goal_list = ds_list_create()
-				var stack_size = ds_stack_size(goal_queue)
-				debug_log("Destroying "+string(stack_size)+" goals")
-				while ds_stack_size(goal_queue) > 0 {
-					ds_list_add(goal_list,ds_stack_pop(goal_queue))
+			//	Was I in an elevator? If so remove myself and recalc elevators light switches
+			if Elevator != 0 {
+				debug_log("I was in an elevator!")
+				ds_list_delete(Elevator.passenger_list,ds_list_find_index(Elevator.passenger_list,id))
+				//	Calc arrow colors 
+				var _up_arrow_color = 0 
+				var _down_arrow_color = 0
+				if ds_list_size(Elevator.passenger_list) > 0 {
+					for(var i=0;i<ds_list_size(Elevator.passenger_list);i++) {
+						var _passenger = Elevator.passenger_list[| i]
+						if _passenger.object_index == guest {
+							with _passenger {
+								if vDirection > 0 _up_arrow_color = 1
+								if vDirection < 0 _down_arrow_color = 1
+							}
+						}						
+					} 
+					Elevator.up_arrow_color = _up_arrow_color
+					Elevator.down_arrow_color = _down_arrow_color					
+				} else {
+					Elevator.up_arrow_color = 0
+					Elevator.down_arrow_color = 0
 				}
-				for(var i=0;i<ds_list_size(goal_list);i++) {
-					var _goal = goal_list[| i]
-					if _goal.object_index == goalpost {
-						debug_log("Destroying my goal of: "+string(object_get_name(_goal.object_index)))
-						instance_destroy(_goal)	
-					}	
-				}
+				
+				Elevator = 0
+				
+			}
+			
+			
+		
+			states = states.pissed
+		
+			var random_direction = choose(-1,1)
+		
+			Direction = random_direction	
+			
+			//	Delete ourselves data wise
+			ds_list_delete(guestController.guest_list,ds_list_find_index(guestController.guest_list,id))
+	
+			//	Free up our door
+			ds_list_add(guestController.vacancy_list,DoorGID)
+			DoorGID.vacant = true
+			
+			guestController.guest_time_last_one_left = time.seconds
+			
+			//	Destroy all goalposts in goal stack
+			var goal_list = ds_list_create()
+			var stack_size = ds_stack_size(goal_queue)
+			debug_log("Destroying "+string(stack_size)+" goals")
+			while ds_stack_size(goal_queue) > 0 {
+				ds_list_add(goal_list,ds_stack_pop(goal_queue))
+			}
+			for(var i=0;i<ds_list_size(goal_list);i++) {
+				var _goal = goal_list[| i]
+				if _goal.object_index == goalpost {
+					debug_log("Destroying my goal of: "+string(object_get_name(_goal.object_index)))
+					instance_destroy(_goal)	
+				}	
+
 			
 		
 			}

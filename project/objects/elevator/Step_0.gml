@@ -46,11 +46,15 @@ switch(states)
 							
 				if (_passenger.object_index == guest) {
 					
-					//	Is this your floor?
-					if _passenger.Floor == _passenger.goal.Floor {
-						ds_list_delete(new_passenger_list,ds_list_find_index(new_passenger_list,_passenger.id))
-					} else {
+					//  Make sure _passengers goal exists (Guest has his goalposts wiped when he gets pissed)
+					if instance_exists(_passenger) and instance_exists(_passenger.goal) {
+					
+						//	Is this your floor?
+						if _passenger.Floor == _passenger.goal.Floor {
+							ds_list_delete(new_passenger_list,ds_list_find_index(new_passenger_list,_passenger.id))
+						} else {
 						
+						}
 					}
 					
 				} else {

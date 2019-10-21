@@ -36,6 +36,7 @@ switch(mode)
 			draw_text(x-64,y-_y,"GID: "+string(id))						_y += 15
 			draw_text(x-64,y-_y,"speed: "+string(hspd))					_y += 15
 			draw_text(x-64,y-_y,"wait time: "+string(wait_time))		_y += 15
+			draw_text(x-64,y-_y,"Elevator: "+string(Elevator))			_y += 15
 			
 		}	
 	break
