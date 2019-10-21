@@ -121,7 +121,7 @@ switch(states)
 													comes_to_my_floor++
 													//	Does it also go to the floor I want?
 													var _elevator_ = guestController.elevator_list[| elev]
-													var _desired_elevator_y = guestController.elevator_list[| goal.Floor]
+													var _desired_elevator_y = guestController.floors_list[| goal.Floor]
 													for(var des=0;des<_elevator_.floors;des++) {
 														if _elevator_.floors_y[des]-64 == _desired_elevator_y {
 															goes_to_desired_floor++	
