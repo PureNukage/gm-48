@@ -459,6 +459,8 @@ if states != states.pissed {
 			//	Free up our door
 			ds_list_add(guestController.vacancy_list,DoorGID)
 			DoorGID.vacant = true
+			
+			guestController.guest_time_last_one_left = time.seconds
 		
 		}
 	
