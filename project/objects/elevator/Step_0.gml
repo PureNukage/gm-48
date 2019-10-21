@@ -37,6 +37,8 @@ switch(states)
 			player.states = states.idle
 			Floor = Floor - floor_direction
 			
+			vspd = 0
+			
 			var new_passenger_list = ds_list_create()
 			ds_list_copy(new_passenger_list,passenger_list)
 			
