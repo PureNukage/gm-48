@@ -75,6 +75,6 @@ if guest_count == 0 and time.stream > 10 {
 
 //	Game Win!
 if guest_count == ds_list_size(guestController.door_list) {
-	show_message("YOU WON     You're hotel is filled the brim with guests!")
+	show_message("YOU WON     Your hotel is filled to the brim with guests!")
 	game_end()	
 }
