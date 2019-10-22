@@ -112,7 +112,8 @@ else if time.stream > 1 {
 					var _floor = _guest.Floor
 				}
 				
-				var _x = irandom_range(_guest.x-164,_guest.x+164)
+				//var _x = irandom_range(_guest.x-164,_guest.x+164)		//	This is the test 'choose a closeby x' code
+				var _x = irandom_range(0,room_width)
 				while (_x < 0 or _x > room_width) _x = irandom_range(_guest.x-164,_guest.x+164)
 				
 				var _goalpost = instance_create_layer(_x,floors_list[| _floor],"Instances_controller",goalpost)
@@ -136,7 +137,7 @@ else if time.stream > 1 {
 	#endregion
 	
 	#region Spawn a Guest after good behavior
-		var _seconds = 5
+		var _seconds = 10
 		if (time.seconds - guest_time_last_one_left) > _seconds and time.seconds-guest_time_last_one_spawned > _seconds {
 			guest_time_last_one_spawned = time.seconds
 		
